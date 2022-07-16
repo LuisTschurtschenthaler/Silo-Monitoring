@@ -1,0 +1,23 @@
+<resources>
+
+    <style name="Theme.SiloMonitoring" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black_secondary</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Theme.MusicPlayer.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/Theme.MusicPlayer.TabLayout.TextAppearance</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/white</item>
+    </style>
+
+    <style name="Theme.MusicPlayer.TabLayout.TextAppearance" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:color">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+</resources>

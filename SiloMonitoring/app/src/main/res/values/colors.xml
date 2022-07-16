@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#0d0c0c</color>
+    <color name="black_secondary">#1f1e1f</color>
+    <color name="black_tertiary">#353435</color>
+    <color name="grayed_out">#66ffffff</color>
+    <color name="grayed_out_secondary">#33ffffff</color>
+    <color name="white">#fefefe</color>
+</resources>
