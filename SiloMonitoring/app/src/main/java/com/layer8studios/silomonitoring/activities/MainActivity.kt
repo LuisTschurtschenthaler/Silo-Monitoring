@@ -1,5 +1,6 @@
 package com.layer8studios.silomonitoring.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
@@ -29,10 +30,17 @@ class MainActivity
         TabLayoutMediator(binding.pageIndicator, binding.viewPager) { _, _ -> }.attach()
 
 
-        binding.buttonNew.setOnClickListener { view ->
-            // TODO
-            binding.viewPager.setCurrentItem(0, true)
+        binding.buttonNew.setOnClickListener {
+            val intent = Intent(this, CreateSiloActivity::class.java)
+            startActivityForResult(intent, 0)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == RESULT_OK)
+            binding.viewPager.currentItem = binding.viewPager.adapter?.itemCount!! - 1
     }
 
 }

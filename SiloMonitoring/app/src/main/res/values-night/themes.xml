@@ -8,16 +8,12 @@
         <item name="android:statusBarColor">?attr/colorPrimary</item>
     </style>
 
-    <style name="Theme.MusicPlayer.TabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabTextAppearance">@style/Theme.MusicPlayer.TabLayout.TextAppearance</item>
-        <item name="tabSelectedTextColor">@color/white</item>
-        <item name="tabIndicatorColor">@color/white</item>
-    </style>
-
-    <style name="Theme.MusicPlayer.TabLayout.TextAppearance" parent="@android:style/TextAppearance.Widget.TabWidget">
-        <item name="android:color">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textAllCaps">true</item>
+    <style name="SiloMonitoring.Widget.MaterialComponents.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/white</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="startIconTint">@color/white</item>
+        <item name="android:textColorHint">@color/grayed_out</item>
+        <item name="hintTextColor">@color/grayed_out</item>
     </style>
 
 </resources>

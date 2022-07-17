@@ -23,6 +23,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activities.CreateSiloActivity"
+            android:parentActivityName=".activities.MainActivity" />
+
     </application>
 
 </manifest>

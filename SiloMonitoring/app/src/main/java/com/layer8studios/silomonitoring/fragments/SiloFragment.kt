@@ -6,11 +6,9 @@ import androidx.fragment.app.Fragment
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.databinding.FragmentSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
-import java.text.SimpleDateFormat
+import com.layer8studios.silomonitoring.utils.dateFormatter
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import java.util.*
 
 
 class SiloFragment
@@ -56,19 +54,22 @@ class SiloFragment
         binding.toolbar.title = "${silo?.name} (${silo?.content})"
         binding.toolbar.inflateMenu(R.menu.silo_menu)
 
+        fun formatText(number: Double): String {
+            return String.format("%.2f", number).replace(".", ",")
+        }
+
         val today = LocalDate.now()
         val days = ChronoUnit.DAYS.between(silo?.lastRefill, today)
         val fillLevel = silo?.capacity!! - (days * silo?.needPerDay!!)
         val fillLevelPercent = (fillLevel / silo?.capacity!!) * 100
 
-        val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val refillDate = today.plusDays(days)
 
-        binding.textViewFillLevelKg.text = "$fillLevel kg"
-        binding.textViewFillLevelPercentage.text = "${String.format("%.2f", fillLevelPercent)}%"
-        binding.textViewCapacity.text = "${silo?.capacity} kg"
+        binding.textViewFillLevelKg.text = "${formatText(fillLevel)} kg"
+        binding.textViewFillLevelPercentage.text = "${formatText(fillLevelPercent)} %"
+        binding.textViewCapacity.text = "${formatText(silo?.capacity!!)} kg"
         binding.textViewDate.text = dateFormatter.format(refillDate)
-        binding.textViewNeedPerDay.text = "${silo?.needPerDay} kg"
+        binding.textViewNeedPerDay.text = "${formatText(silo?.needPerDay!!)} kg"
 
         binding.waveView.setProgress(fillLevelPercent.toInt())
     }
