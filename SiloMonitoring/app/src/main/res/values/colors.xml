@@ -6,4 +6,9 @@
     <color name="grayed_out">#66ffffff</color>
     <color name="grayed_out_secondary">#33ffffff</color>
     <color name="white">#fefefe</color>
+
+    <color name="green">#196e2e</color>
+    <color name="orange">#d68802</color>
+    <color name="red">#b82b1f</color>
+
 </resources>

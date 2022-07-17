@@ -1,12 +1,11 @@
 <resources>
-    <string name="app_name">Silo Monitoring</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="app_name">Silo Überwachung</string>
+    <string name="text_new">Neu</string>
+    <string name="text_edit">Bearbeiten</string>
+    <string name="text_delete">Löschen</string>
+    <string name="text_fill_level">Füllstand:</string>
+    <string name="text_capacity">Kapazität:</string>
+    <string name="text_silo_empty_on">Silo ist leer am:</string>
+    <string name="text_need_per_day">Täglicher Bedarf:</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

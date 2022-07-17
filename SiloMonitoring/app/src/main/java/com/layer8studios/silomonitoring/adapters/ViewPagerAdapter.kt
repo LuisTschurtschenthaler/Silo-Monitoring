@@ -1,27 +1,21 @@
 package com.layer8studios.silomonitoring.adapters
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.layer8studios.silomonitoring.fragments.SiloFragment
+import com.layer8studios.silomonitoring.models.Silo
 
 
-class ViewPagerAdapter(supportFragmentManager: FragmentManager)
-    : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class ViewPagerAdapter(
+    private val silos: List<Silo>,
+    private val fragmentActivity: FragmentActivity
+): FragmentStateAdapter(fragmentActivity) {
 
-    private val fragments = ArrayList<Fragment>()
-    private val fragmentTitles = ArrayList<String>()
-
-
-    override fun getItem(position: Int): Fragment = fragments[position]
-
-    override fun getCount(): Int = fragments.size
-
-    override fun getPageTitle(position: Int): CharSequence = fragmentTitles[position]
-
-    fun addFragment(fragment: Fragment, title: String): ViewPagerAdapter {
-        fragments.add(fragment)
-        fragmentTitles.add(title)
-        return this
+    override fun createFragment(position: Int): Fragment {
+        return SiloFragment.newInstance(silos[position])
     }
+
+    override fun getItemCount(): Int = silos.size
 
 }
