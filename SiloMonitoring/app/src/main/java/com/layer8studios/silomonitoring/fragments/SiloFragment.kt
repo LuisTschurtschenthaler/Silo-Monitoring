@@ -6,6 +6,11 @@ import androidx.fragment.app.Fragment
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.databinding.FragmentSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
+import java.util.*
 
 
 class SiloFragment
@@ -51,9 +56,21 @@ class SiloFragment
         binding.toolbar.title = "${silo?.name} (${silo?.content})"
         binding.toolbar.inflateMenu(R.menu.silo_menu)
 
-        binding.cardViewEdit.setOnClickListener {
-            // TODO
-        }
+        val today = LocalDate.now()
+        val days = ChronoUnit.DAYS.between(silo?.lastRefill, today)
+        val fillLevel = silo?.capacity!! - (days * silo?.needPerDay!!)
+        val fillLevelPercent = (fillLevel / silo?.capacity!!) * 100
+
+        val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+        val refillDate = today.plusDays(days)
+
+        binding.textViewFillLevelKg.text = "$fillLevel kg"
+        binding.textViewFillLevelPercentage.text = "${String.format("%.2f", fillLevelPercent)}%"
+        binding.textViewCapacity.text = "${silo?.capacity} kg"
+        binding.textViewDate.text = dateFormatter.format(refillDate)
+        binding.textViewNeedPerDay.text = "${silo?.needPerDay} kg"
+
+        binding.waveView.setProgress(fillLevelPercent.toInt())
     }
 
     @Deprecated("Deprecated in Java")

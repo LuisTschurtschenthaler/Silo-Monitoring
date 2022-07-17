@@ -6,6 +6,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.layer8studios.silomonitoring.adapters.ViewPagerAdapter
 import com.layer8studios.silomonitoring.databinding.ActivityMainBinding
 import com.layer8studios.silomonitoring.models.Silo
+import java.time.LocalDate
 
 
 class MainActivity
@@ -21,8 +22,7 @@ class MainActivity
         setContentView(binding.root)
 
         val silos = listOf(
-            Silo("Silo 1", "Weizen", 15.000, 14.2),
-            Silo("Silo 2", "Weizen", 15.000, 14.2)
+            Silo("Silo 1", "Weizen", 10.0, 1.0, LocalDate.of(2022, 7, 15))
         )
 
         binding.viewPager.adapter = ViewPagerAdapter(silos, this)
