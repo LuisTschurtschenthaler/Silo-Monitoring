@@ -7,6 +7,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.layer8studios.silomonitoring.adapters.ViewPagerAdapter
 import com.layer8studios.silomonitoring.databinding.ActivityMainBinding
 import com.layer8studios.silomonitoring.models.Silo
+import com.layer8studios.silomonitoring.utils.Preferences
 import java.time.LocalDate
 
 
@@ -18,6 +19,9 @@ class MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(!Preferences.isInitialized())
+            Preferences.init(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
