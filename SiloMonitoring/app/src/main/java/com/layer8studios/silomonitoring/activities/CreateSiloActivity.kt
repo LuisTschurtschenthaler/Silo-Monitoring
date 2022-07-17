@@ -16,6 +16,8 @@ class CreateSiloActivity
 
         binding = ActivityCreateSiloBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.toolbar.setNavigationOnClickListener { super.onBackPressed() }
     }
 
 }
