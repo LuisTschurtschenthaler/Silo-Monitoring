@@ -18,4 +18,7 @@
     <string name="create_silo">Silo erstellen</string>
     <string name="create">Erstellen</string>
 
+    <string name="empty_field">Das Feld darf nicht leer sein!</string>
+    <string name="too_big">Darf nicht größer als Kapazität des Silos sein!</string>
+
 </resources>
