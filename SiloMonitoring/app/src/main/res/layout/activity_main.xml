@@ -15,6 +15,34 @@
         android:overScrollMode="never"
         android:layout_above="@id/bottom_navigation" />
 
+    <LinearLayout
+        android:id="@+id/linear_layout_texts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/no_silos_created"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="@string/click_on_new_to_create_a_silo"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:alpha="0.64" />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"

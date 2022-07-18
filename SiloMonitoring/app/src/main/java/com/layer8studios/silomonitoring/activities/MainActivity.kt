@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.layer8studios.silomonitoring.adapters.ViewPagerAdapter
@@ -31,6 +32,7 @@ class MainActivity
         adapter = ViewPagerAdapter(this)
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.pageIndicator, binding.viewPager) { _, _ -> }.attach()
+        updateLayouts()
 
         binding.buttonNew.setOnClickListener {
             val intent = Intent(this, CreateSiloActivity::class.java)
@@ -43,12 +45,18 @@ class MainActivity
 
         if(requestCode == 0 && resultCode == RESULT_OK) {
             adapter.update()
+            updateLayouts()
             binding.viewPager.currentItem = adapter.itemCount
         }
     }
 
     fun removeItem(silo: Silo) {
         adapter.removeSilo(silo)
+        updateLayouts()
+    }
+
+    private fun updateLayouts() {
+        binding.linearLayoutTexts.visibility = if(adapter.itemCount > 0) View.GONE else View.VISIBLE
     }
 
 }

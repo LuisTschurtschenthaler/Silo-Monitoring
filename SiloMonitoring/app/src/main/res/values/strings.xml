@@ -26,5 +26,7 @@
 
     <string name="empty_field">Das Feld darf nicht leer sein!</string>
     <string name="too_big">Darf nicht größer als Kapazität des Silos sein!</string>
+    <string name="no_silos_created">Noch keine Silos erstellt</string>
+    <string name="click_on_new_to_create_a_silo">Zum erstellen auf \'NEU\' klicken</string>
 
 </resources>
