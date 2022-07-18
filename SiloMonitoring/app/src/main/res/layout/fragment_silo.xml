@@ -36,8 +36,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:padding="12dp"
-            android:text="12000kg"
+            android:text="12000kg übrig"
             android:textColor="@color/white"
             android:textSize="28sp"
             android:textStyle="bold" />
