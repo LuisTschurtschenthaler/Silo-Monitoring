@@ -32,6 +32,13 @@ object Preferences {
         saveSilos(silos)
     }
 
+    fun replaceSilo(oldSilo: Silo, newSilo: Silo) {
+        val silos = getSilos()
+        val item = silos.indexOf(oldSilo)
+        silos[item] = newSilo
+        saveSilos(silos)
+    }
+
     fun removeSilo(silo: Silo) {
         val silos = getSilos()
         silos.remove(silo)

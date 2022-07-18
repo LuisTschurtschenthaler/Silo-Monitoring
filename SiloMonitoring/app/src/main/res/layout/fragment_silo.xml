@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:wave="http://schemas.android.com/tools"
     android:background="@color/black">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -200,12 +201,12 @@
                 android:layout_marginStart="64dp"
                 android:layout_marginEnd="64dp"
                 android:background="@color/green"
-                app:above_wave_color="@android:color/white"
-                app:blow_wave_color="@android:color/white"
-                app:progress="80"
-                app:wave_height="large"
-                app:wave_hz="normal"
-                app:wave_length="middle" />
+                wave:above_wave_color="@color/white"
+                wave:blow_wave_color="@color/white"
+                wave:wave_height="large"
+                wave:wave_hz="normal"
+                wave:fill_to_brim="true"
+                wave:wave_length="middle" />
 
             <ImageView
                 android:layout_width="match_parent"

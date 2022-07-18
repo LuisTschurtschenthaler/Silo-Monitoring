@@ -29,7 +29,6 @@ class MainActivity
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.pageIndicator, binding.viewPager) { _, _ -> }.attach()
 
-
         binding.buttonNew.setOnClickListener {
             val intent = Intent(this, CreateSiloActivity::class.java)
             startActivityForResult(intent, 0)
@@ -39,7 +38,7 @@ class MainActivity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(resultCode == RESULT_OK) {
+        if(requestCode == 0 && resultCode == RESULT_OK) {
             adapter.update()
             binding.viewPager.currentItem = binding.viewPager.adapter?.itemCount!!
         }

@@ -1,11 +1,15 @@
 package com.layer8studios.silomonitoring.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.layer8studios.silomonitoring.R
+import com.layer8studios.silomonitoring.activities.CreateSiloActivity
 import com.layer8studios.silomonitoring.databinding.FragmentSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
+import com.layer8studios.silomonitoring.utils.ARG_SILO
 import com.layer8studios.silomonitoring.utils.dateFormatter
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -15,7 +19,6 @@ class SiloFragment
     : Fragment() {
 
     companion object {
-        private const val ARG_SILO = "ARG_SILO"
 
         fun newInstance(silo: Silo): SiloFragment {
             val fragment = SiloFragment()
@@ -30,6 +33,7 @@ class SiloFragment
 
     private lateinit var binding: FragmentSiloBinding
     private var silo: Silo? = null
+    private var fillLevelPercent = 0.0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,9 +54,43 @@ class SiloFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.toolbar.title = "${silo?.name} (${silo?.content})"
         binding.toolbar.inflateMenu(R.menu.silo_menu)
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when(item.itemId) {
+                R.id.action_edit -> {
+                    val intent = Intent(requireContext(), CreateSiloActivity::class.java).apply {
+                        putExtra(ARG_SILO, silo)
+                    }
+                    startActivityForResult(intent, 1)
+                }
+
+                R.id.action_delete -> {
+                    // TODO
+                }
+            }
+            true
+        }
+        update()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        update()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
+            silo = data?.getParcelableExtra(ARG_SILO)
+            update()
+            println("YESSSSSSS")
+        }
+    }
+
+
+    private fun update() {
+        binding.toolbar.title = "${silo?.name} (${silo?.content})"
 
         fun formatText(number: Double): String {
             return String.format("%.2f", number).replace(".", ",")
@@ -62,7 +100,7 @@ class SiloFragment
         val lastRefillDate = LocalDate.of(silo?.lastRefillDateYear!!, silo?.lastRefillDateMonth!!, silo?.lastRefillDateDay!!)
         val days = ChronoUnit.DAYS.between(lastRefillDate, today)
         val fillLevel = silo?.lastRefillQuantity!! - (days * silo?.needPerDay!!)
-        val fillLevelPercent = (fillLevel / silo?.capacity!!) * 100
+        fillLevelPercent = (fillLevel / silo?.capacity!!) * 100
 
         val daysLeft = (fillLevel / silo?.needPerDay!!).toLong()
         val refillDate = today.plusDays(daysLeft)
@@ -73,22 +111,7 @@ class SiloFragment
         binding.textViewDate.text = dateFormatter.format(refillDate)
         binding.textViewNeedPerDay.text = "${formatText(silo?.needPerDay!!)} kg"
 
-        binding.waveView.setProgress(fillLevelPercent.toInt())
+        val progress = fillLevelPercent.toInt()
+        binding.waveView.setProgress(progress)
     }
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.action_edit -> {
-                // TODO
-            }
-
-            R.id.action_delete -> {
-                // TODO
-            }
-        }
-        return true
-    }
-
-
 }
