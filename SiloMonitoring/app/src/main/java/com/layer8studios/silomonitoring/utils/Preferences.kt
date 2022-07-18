@@ -8,7 +8,7 @@ import com.layer8studios.silomonitoring.models.Silo
 
 
 object Preferences {
-    lateinit var preferences: SharedPreferences
+    private lateinit var preferences: SharedPreferences
 
     private const val NAME = "PREFERENCES"
     private const val MODE = Context.MODE_PRIVATE

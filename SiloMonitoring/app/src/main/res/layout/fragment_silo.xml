@@ -198,15 +198,13 @@
                 android:id="@+id/wave_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginEnd="64dp"
                 android:background="@color/green"
                 wave:above_wave_color="@color/white"
                 wave:blow_wave_color="@color/white"
-                wave:wave_height="large"
-                wave:wave_hz="normal"
+                wave:wave_height="middle"
+                wave:wave_hz="large"
                 wave:fill_to_brim="true"
-                wave:wave_length="middle" />
+                wave:wave_length="little" />
 
             <ImageView
                 android:layout_width="match_parent"
