@@ -1,5 +1,6 @@
 package com.layer8studios.silomonitoring.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -7,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.activities.CreateSiloActivity
+import com.layer8studios.silomonitoring.activities.MainActivity
 import com.layer8studios.silomonitoring.databinding.FragmentSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.utils.ARG_SILO
+import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.dateFormatter
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -65,7 +68,16 @@ class SiloFragment
                 }
 
                 R.id.action_delete -> {
-                    // TODO
+                    AlertDialog.Builder(requireContext())
+                        .setTitle(getString(R.string.delete_title))
+                        .setMessage(getString(R.string.delete_message))
+                        .setNegativeButton(getString(R.string.cancel), null)
+                        .setPositiveButton(getString(R.string.delete)) { _, _ ->
+                            Preferences.removeSilo(silo!!)
+                            (activity as MainActivity).removeItem(silo!!)
+                        }
+                        .create()
+                        .show()
                 }
             }
             true
@@ -84,7 +96,6 @@ class SiloFragment
         if(requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
             silo = data?.getParcelableExtra(ARG_SILO)
             update()
-            println("YESSSSSSS")
         }
     }
 

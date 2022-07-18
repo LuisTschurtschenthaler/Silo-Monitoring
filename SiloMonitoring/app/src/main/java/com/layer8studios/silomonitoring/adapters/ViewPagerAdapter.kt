@@ -14,6 +14,11 @@ class ViewPagerAdapter(
 
     private var silos: ArrayList<Silo> = Preferences.getSilos()
 
+    fun removeSilo(silo: Silo) {
+        val index = silos.indexOf(silo)
+        silos.remove(silo)
+        notifyItemRemoved(index)
+    }
 
     fun update() {
         this.silos = Preferences.getSilos()

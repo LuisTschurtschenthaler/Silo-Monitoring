@@ -7,6 +7,7 @@
 
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:datePickerDialogTheme">@style/SiloMonitoring.DatePickerDialogTheme</item>
+        <item name="android:alertDialogTheme">@style/SiloMonitoring.Dialog.Alert</item>
     </style>
 
     <style name="SiloMonitoring.Widget.MaterialComponents.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -22,6 +23,11 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/grayed_out</item>
         <item name="colorAccent">@color/white</item>
+    </style>
+
+    <style name="SiloMonitoring.Dialog.Alert" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:background">@color/black_secondary</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>
