@@ -67,7 +67,6 @@ class CreateSiloActivity
 
         binding.buttonCreate.setOnClickListener {
             var isError = false
-
             val isEmpty = { txtEdit: TextInputEditText, txtLayout: TextInputLayout ->
                 if(txtEdit.text.isNullOrEmpty()) {
                     txtLayout.error = getString(R.string.empty_field)
@@ -81,6 +80,21 @@ class CreateSiloActivity
             isEmpty(binding.textEditSiloContent, binding.textInputLayoutSiloContent)
             isEmpty(binding.textEditNeedPerDay, binding.textInputLayoutNeedPerDay)
             isEmpty(binding.textEditLastDeliveryQuantity, binding.textInputLayoutLastDeliveryQuantity)
+
+
+            val isNull = { txtEdit: TextInputEditText, txtLayout: TextInputLayout ->
+                try {
+                    if (txtEdit.text.toString().toDouble() <= 0.0) {
+                        txtLayout.error = getString(R.string.must_not_be_null)
+                        isError = true
+                    } else txtLayout.error = null
+                } catch (ex: Exception) { }
+            }
+
+            isNull(binding.textEditSiloCapacity, binding.textInputLayoutSiloCapacity)
+            isNull(binding.textEditNeedPerDay, binding.textInputLayoutNeedPerDay)
+            isNull(binding.textEditLastDeliveryQuantity, binding.textInputLayoutLastDeliveryQuantity)
+            if(isError) return@setOnClickListener
 
             try {
                 val name = binding.textEditSiloName.text.toString()
@@ -116,7 +130,7 @@ class CreateSiloActivity
 
                     finish()
                 }
-            } catch (ex: Exception) {
+            } catch(ex: Exception) {
                 println(ex)
             }
         }

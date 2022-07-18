@@ -2,9 +2,14 @@ package com.layer8studios.silomonitoring.fragments
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.activities.CreateSiloActivity
@@ -16,6 +21,7 @@ import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.dateFormatter
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import kotlin.math.ceil
 
 
 class SiloFragment
@@ -113,16 +119,42 @@ class SiloFragment
         val fillLevel = silo?.lastRefillQuantity!! - (days * silo?.needPerDay!!)
         fillLevelPercent = (fillLevel / silo?.capacity!!) * 100
 
-        val daysLeft = (fillLevel / silo?.needPerDay!!).toLong()
+        val daysLeft = ceil(fillLevel / silo?.needPerDay!!).toLong()
         val refillDate = today.plusDays(daysLeft)
 
-        binding.textViewFillLevelKg.text = "${formatText(fillLevel)} kg"
+        binding.textViewFillLevelKg.text = if(fillLevel > 0.0) "${formatText(fillLevel)} kg" else getString(R.string.empty)
         binding.textViewFillLevelPercentage.text = "${formatText(fillLevelPercent)} %"
         binding.textViewCapacity.text = "${formatText(silo?.capacity!!)} kg"
         binding.textViewDate.text = dateFormatter.format(refillDate)
         binding.textViewNeedPerDay.text = "${formatText(silo?.needPerDay!!)} kg"
 
-        val progress = fillLevelPercent.toInt()
+        var progress = fillLevelPercent.toInt()
+        if(progress >= 95)
+            progress = 95
+        else if(progress <= 5)
+            progress = 5
         binding.waveView.setProgress(progress)
+
+        val green = ContextCompat.getColor(requireContext(), R.color.green)
+        val orange = ContextCompat.getColor(requireContext(), R.color.orange)
+        val red = ContextCompat.getColor(requireContext(), R.color.red)
+
+        val color = if(progress > 50)
+            getColor(orange, green, 100 - progress)
+        else getColor(orange, red, progress)
+        binding.waveView.background = ColorDrawable(color)
     }
+
+    private fun getColor(colorStart: Int, colorEnd: Int, percent: Int): Int {
+        return Color.rgb(
+            interpolate(Color.red(colorStart), Color.red(colorEnd), percent),
+            interpolate(Color.green(colorStart), Color.green(colorEnd), percent),
+            interpolate(Color.blue(colorStart), Color.blue(colorEnd), percent)
+        )
+    }
+
+    private fun interpolate(colorStart: Int, colorEnd: Int, percent: Int): Int {
+        return (Math.min(colorStart, colorEnd) * (100 - percent) + Math.max(colorStart, colorEnd) * percent) / 100
+    }
+
 }

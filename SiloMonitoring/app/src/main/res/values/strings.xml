@@ -23,8 +23,9 @@
     <string name="delete">Löschen</string>
     <string name="delete_title">ACHTUNG!</string>
     <string name="delete_message">Bist du sicher, dass du das Silo löschen willst?</string>
-
+    <string name="empty">LEER</string>
     <string name="empty_field">Das Feld darf nicht leer sein!</string>
+    <string name="must_not_be_null">Muss größer als Null sein!</string>
     <string name="too_big">Darf nicht größer als Kapazität des Silos sein!</string>
     <string name="no_silos_created">Noch keine Silos erstellt</string>
     <string name="click_on_new_to_create_a_silo">Zum erstellen auf \'NEU\' klicken</string>
