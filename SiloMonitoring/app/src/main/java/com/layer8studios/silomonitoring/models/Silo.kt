@@ -6,12 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Silo(
-    val name: String,
-    val capacity: Double,
-    val content: String,
-    val needPerDay: Double,
-    val lastRefillQuantity: Double,
-    val lastRefillDateYear: Int,
-    val lastRefillDateMonth: Int,
-    val lastRefillDateDay: Int
+    var name: String,
+    var capacity: Double,
+    var content: String,
+    var needPerDay: Double,
+    var lastRefillQuantity: Double,
+    var lastRefillDate: Date,
+    var contentLeft: Double
 ) : Parcelable

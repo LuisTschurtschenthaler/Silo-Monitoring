@@ -113,16 +113,12 @@ class SiloFragment
             return String.format("%.2f", number).replace(".", ",")
         }
 
-        val today = LocalDate.now()
-        val lastRefillDate = LocalDate.of(silo?.lastRefillDateYear!!, silo?.lastRefillDateMonth!!, silo?.lastRefillDateDay!!)
-        val days = ChronoUnit.DAYS.between(lastRefillDate, today)
-        val fillLevel = silo?.lastRefillQuantity!! - (days * silo?.needPerDay!!)
-        fillLevelPercent = (fillLevel / silo?.capacity!!) * 100
+        fillLevelPercent = (silo?.contentLeft!! / silo?.capacity!!) * 100
 
-        val daysLeft = ceil(fillLevel / silo?.needPerDay!!).toLong()
-        val refillDate = today.plusDays(daysLeft)
+        val daysLeft = ceil(silo?.contentLeft!! / silo?.needPerDay!!).toLong()
+        val refillDate = LocalDate.now().plusDays(daysLeft)
 
-        binding.textViewFillLevelKg.text = if(fillLevel > 0.0) "${formatText(fillLevel)} kg ${getString(R.string.left)}" else getString(R.string.empty)
+        binding.textViewFillLevelKg.text = if(silo?.contentLeft!! > 0.0) "${formatText(silo?.contentLeft!!)} kg ${getString(R.string.left)}" else getString(R.string.empty)
         binding.textViewFillLevelPercentage.text = "${formatText(fillLevelPercent)} %"
         binding.textViewCapacity.text = "${formatText(silo?.capacity!!)} kg"
         binding.textViewDate.text = dateFormatter.format(refillDate)

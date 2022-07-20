@@ -25,7 +25,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/app_bar_layout"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp">
 
@@ -147,7 +146,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_input_layout_last_delivery_quantity"
-            android:layout_marginTop="16dp"
             android:text="@string/last_delivery_date"
             android:textColor="@color/white"
             android:textSize="18sp" />
@@ -179,6 +177,7 @@
                 android:textSize="14sp" />
 
         </LinearLayout>
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/button_create"

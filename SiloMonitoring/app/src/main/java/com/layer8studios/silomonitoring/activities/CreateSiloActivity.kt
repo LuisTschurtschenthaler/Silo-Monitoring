@@ -9,10 +9,12 @@ import com.google.android.material.textfield.TextInputLayout
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.databinding.ActivityCreateSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
+import com.layer8studios.silomonitoring.models.Date
 import com.layer8studios.silomonitoring.utils.ARG_SILO
 import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.dateFormatter
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 
@@ -38,7 +40,7 @@ class CreateSiloActivity
             binding.toolbar.title = getString(R.string.edit_silo)
             binding.textViewButton.text = getString(R.string.apply_changes)
 
-            val refillDate = LocalDate.of(silo!!.lastRefillDateYear, silo!!.lastRefillDateMonth, silo!!.lastRefillDateDay)
+            val refillDate = LocalDate.of(silo!!.lastRefillDate.year, silo!!.lastRefillDate.month, silo!!.lastRefillDate.dayOfMonth)
             binding.textEditSiloName.setText(silo!!.name)
             binding.textEditSiloCapacity.setText(silo!!.capacity.toString())
             binding.textEditSiloContent.setText(silo!!.content)
@@ -101,7 +103,7 @@ class CreateSiloActivity
                 val capacity = binding.textEditSiloCapacity.text.toString().toDouble()
                 val content = binding.textEditSiloContent.text.toString()
                 val needPerDay = binding.textEditNeedPerDay.text.toString().toDouble()
-                val lastDeliveryQuantity = binding.textEditLastDeliveryQuantity.text.toString().toDouble()
+                val lastRefillQuantity = binding.textEditLastDeliveryQuantity.text.toString().toDouble()
                 val lastRefillDate = LocalDate.parse(binding.textViewSiloLastDeliveryDate.text, dateFormatter)
 
                 val isBigger = { one: Double, two: Double, txtLayout: TextInputLayout ->
@@ -111,11 +113,16 @@ class CreateSiloActivity
                     }
                     else txtLayout.error = null
                 }
-                isBigger(lastDeliveryQuantity, capacity, binding.textInputLayoutLastDeliveryQuantity)
+                isBigger(lastRefillQuantity, capacity, binding.textInputLayoutLastDeliveryQuantity)
                 isBigger(needPerDay, capacity, binding.textInputLayoutNeedPerDay)
 
                 if(!isError) {
-                    val newSilo = Silo(name, capacity, content, needPerDay, lastDeliveryQuantity, lastRefillDate.year, lastRefillDate.monthValue, lastRefillDate.dayOfMonth)
+                    val today = LocalDate.now()
+                    val date = Date(lastRefillDate.year, lastRefillDate.monthValue, lastRefillDate.dayOfMonth)
+                    val days = ChronoUnit.DAYS.between(lastRefillDate, today)
+                    val contentLeft = lastRefillQuantity - (days * needPerDay)
+                    val newSilo = Silo(name, capacity, content, needPerDay, lastRefillQuantity, date, contentLeft)
+
                     if(silo == null) {
                         Preferences.addSilo(newSilo)
                         setResult(RESULT_OK)
