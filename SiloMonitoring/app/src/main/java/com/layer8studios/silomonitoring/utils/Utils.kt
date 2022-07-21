@@ -23,8 +23,10 @@ object Utils {
                 LocalDate.now().minusDays(1)
             else silo.emptyingHistory[nextIndex].date.toLocalDate()
 
-            for(date in startDate..endDate)
-                contentLeft -= entry.needPerDay
+            for(date in startDate..endDate) {
+                if(date != LocalDate.now())
+                   contentLeft -= entry.needPerDay
+            }
         }
 
         return contentLeft

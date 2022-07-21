@@ -133,9 +133,13 @@ class CreateSiloActivity
                             newSilo.emptyingHistory.add(entry)
                         }
 
-                        if(newSilo.needPerDay != silo!!.needPerDay) {
-                            val newHistoryEntry = SiloHistoryEntry(LocalDate.now().toDate(), needPerDay)
+                        val newHistoryEntry = SiloHistoryEntry(LocalDate.now().toDate(), needPerDay)
+                        if(newSilo.lastRefillDate != silo?.lastRefillDate) {
+                            newSilo.emptyingHistory.clear()
+                            newSilo.emptyingHistory.add(newHistoryEntry)
+                        }
 
+                        if(newSilo.needPerDay != silo!!.needPerDay) {
                             if(newHistoryEntry.date == newSilo.emptyingHistory.last().date)
                                 newSilo.emptyingHistory.removeLast()
                             newSilo.emptyingHistory.add(newHistoryEntry)
