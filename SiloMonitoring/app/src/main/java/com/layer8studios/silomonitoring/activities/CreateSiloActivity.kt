@@ -9,12 +9,13 @@ import com.google.android.material.textfield.TextInputLayout
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.databinding.ActivityCreateSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
-import com.layer8studios.silomonitoring.models.Date
+import com.layer8studios.silomonitoring.models.SiloHistoryEntry
 import com.layer8studios.silomonitoring.utils.ARG_SILO
 import com.layer8studios.silomonitoring.utils.Preferences
+import com.layer8studios.silomonitoring.utils.Utils.toDate
+import com.layer8studios.silomonitoring.utils.Utils.toLocalDate
 import com.layer8studios.silomonitoring.utils.dateFormatter
 import java.time.LocalDate
-import java.time.temporal.ChronoUnit
 import java.util.*
 
 
@@ -35,12 +36,12 @@ class CreateSiloActivity
 
         silo = intent.getParcelableExtra(ARG_SILO)
 
-        val maxDay = LocalDate.now().minusDays(1)
+        val maxDay = LocalDate.now()
         if(silo != null) {
             binding.toolbar.title = getString(R.string.edit_silo)
             binding.textViewButton.text = getString(R.string.apply_changes)
 
-            val refillDate = LocalDate.of(silo!!.lastRefillDate.year, silo!!.lastRefillDate.month, silo!!.lastRefillDate.dayOfMonth)
+            val refillDate = silo!!.lastRefillDate.toLocalDate()
             binding.textEditSiloName.setText(silo!!.name)
             binding.textEditSiloCapacity.setText(silo!!.capacity.toString())
             binding.textEditSiloContent.setText(silo!!.content)
@@ -117,17 +118,29 @@ class CreateSiloActivity
                 isBigger(needPerDay, capacity, binding.textInputLayoutNeedPerDay)
 
                 if(!isError) {
-                    val today = LocalDate.now()
-                    val date = Date(lastRefillDate.year, lastRefillDate.monthValue, lastRefillDate.dayOfMonth)
-                    val days = ChronoUnit.DAYS.between(lastRefillDate, today)
-                    val contentLeft = lastRefillQuantity - (days * needPerDay)
-                    val newSilo = Silo(name, capacity, content, needPerDay, lastRefillQuantity, date, contentLeft)
+                    val newSilo = Silo(name, capacity, content, needPerDay, lastRefillQuantity, lastRefillDate.toDate())
 
                     if(silo == null) {
+                        newSilo.emptyingHistory.add(
+                            SiloHistoryEntry(lastRefillDate.toDate(), needPerDay)
+                        )
+
                         Preferences.addSilo(newSilo)
                         setResult(RESULT_OK)
                     }
                     else {
+                        silo!!.emptyingHistory.forEach { entry ->
+                            newSilo.emptyingHistory.add(entry)
+                        }
+
+                        if(newSilo.needPerDay != silo!!.needPerDay) {
+                            val newHistoryEntry = SiloHistoryEntry(LocalDate.now().toDate(), needPerDay)
+
+                            if(newHistoryEntry.date == newSilo.emptyingHistory.last().date)
+                                newSilo.emptyingHistory.removeLast()
+                            newSilo.emptyingHistory.add(newHistoryEntry)
+                        }
+
                         Preferences.replaceSilo(silo!!, newSilo)
                         val intent = Intent().apply {
                             putExtra(ARG_SILO, newSilo)

@@ -18,9 +18,9 @@ import com.layer8studios.silomonitoring.databinding.FragmentSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.utils.ARG_SILO
 import com.layer8studios.silomonitoring.utils.Preferences
+import com.layer8studios.silomonitoring.utils.Utils
 import com.layer8studios.silomonitoring.utils.dateFormatter
 import java.time.LocalDate
-import java.time.temporal.ChronoUnit
 import kotlin.math.ceil
 
 
@@ -107,18 +107,24 @@ class SiloFragment
 
 
     private fun update() {
+        if(silo == null)
+            return
+
+        println(silo)
+
         binding.toolbar.title = "${silo?.name} (${silo?.content})"
 
         fun formatText(number: Double): String {
             return String.format("%.2f", number).replace(".", ",")
         }
 
-        fillLevelPercent = (silo?.contentLeft!! / silo?.capacity!!) * 100
+        val contentLeft = Utils.getContentLeft(silo!!)
+        fillLevelPercent = (contentLeft / silo?.capacity!!) * 100
 
-        val daysLeft = ceil(silo?.contentLeft!! / silo?.needPerDay!!).toLong()
+        val daysLeft = ceil(contentLeft / silo?.needPerDay!!).toLong()
         val refillDate = LocalDate.now().plusDays(daysLeft)
 
-        binding.textViewFillLevelKg.text = if(silo?.contentLeft!! > 0.0) "${formatText(silo?.contentLeft!!)} kg ${getString(R.string.left)}" else getString(R.string.empty)
+        binding.textViewFillLevelKg.text = if(contentLeft > 0.0) "${formatText(contentLeft)} kg ${getString(R.string.left)}" else getString(R.string.empty)
         binding.textViewFillLevelPercentage.text = "${formatText(fillLevelPercent)} %"
         binding.textViewCapacity.text = "${formatText(silo?.capacity!!)} kg"
         binding.textViewDate.text = dateFormatter.format(refillDate)

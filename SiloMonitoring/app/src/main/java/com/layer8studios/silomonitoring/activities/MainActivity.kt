@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.layer8studios.silomonitoring.adapters.ViewPagerAdapter
 import com.layer8studios.silomonitoring.databinding.ActivityMainBinding
-import com.layer8studios.silomonitoring.models.Date
 import com.layer8studios.silomonitoring.models.Silo
-import com.layer8studios.silomonitoring.receivers.BootCompletedReceiver
+import com.layer8studios.silomonitoring.receivers.ReminderReceiver
 import com.layer8studios.silomonitoring.utils.Preferences
 
 
@@ -23,11 +22,11 @@ class MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(!BootCompletedReceiver.isStarted)
-            BootCompletedReceiver.startReminder(applicationContext, Date(2022, 7, 20))
-
         if(!Preferences.isInitialized())
             Preferences.init(this)
+
+        if(!ReminderReceiver.isInitialized)
+            ReminderReceiver.initialize(applicationContext)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

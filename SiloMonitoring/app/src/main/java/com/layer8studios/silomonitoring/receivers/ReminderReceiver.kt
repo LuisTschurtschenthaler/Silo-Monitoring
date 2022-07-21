@@ -1,5 +1,6 @@
 package com.layer8studios.silomonitoring.receivers
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -10,15 +11,60 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.activities.MainActivity
+import com.layer8studios.silomonitoring.models.Date
 import com.layer8studios.silomonitoring.models.Silo
+import com.layer8studios.silomonitoring.models.SiloHistoryEntry
 import com.layer8studios.silomonitoring.utils.ARG_SILO
+import com.layer8studios.silomonitoring.utils.Preferences
+import com.layer8studios.silomonitoring.utils.Utils
+import com.layer8studios.silomonitoring.utils.Utils.toDate
 import java.time.LocalDate
-import java.time.temporal.ChronoUnit
 import java.util.*
+import kotlin.math.ceil
 
 
 class ReminderReceiver
     : BroadcastReceiver() {
+
+    companion object {
+        var isInitialized = false
+
+        fun initialize(context: Context) {
+            if(!Preferences.isInitialized())
+                Preferences.init(context)
+
+            val silos = Preferences.getSilos()
+            silos.forEach { silo ->
+                val contentLeft = Utils.getContentLeft(silo)
+                val daysLeft = ceil(contentLeft / silo.needPerDay).toLong()
+                val refillDate = LocalDate.now().plusDays(daysLeft)
+                // TODO(INCLUDE DAYS BEFORE)
+                startReminder(context, refillDate.toDate())
+            }
+            isInitialized = true
+        }
+
+        private fun startReminder(context: Context, date: Date) {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, ReminderReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, (0..Int.MAX_VALUE).random(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+            val now = Calendar.getInstance()
+            val future = now.clone() as Calendar
+            future.set(Calendar.MONTH, date.month)
+            future.set(Calendar.YEAR, date.year)
+            future.set(Calendar.DAY_OF_MONTH, date.dayOfMonth)
+            future.set(Calendar.HOUR_OF_DAY, 0)
+            future.set(Calendar.MINUTE, 0)
+            future.set(Calendar.SECOND, 0)
+
+            if(future.after(now))
+                future.add(Calendar.SECOND, 15)
+
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent)
+        }
+    }
+
 
     private val messageGroup = "com.layer8studios.silomonitoring.GROUP_MESSAGES"
     private var isInitialized = false
@@ -26,8 +72,15 @@ class ReminderReceiver
 
 
     override fun onReceive(context: Context, intent: Intent) {
+        if(!Preferences.isInitialized())
+            Preferences.init(context)
+
         val silo = intent.getParcelableExtra<Silo>(ARG_SILO)
-        silo!!.contentLeft -= silo!!.needPerDay
+        val newSilo = (silo?.copy() as Silo).apply {
+            val newHistoryEntry = SiloHistoryEntry(LocalDate.now().toDate(), silo.needPerDay)
+            emptyingHistory.add(newHistoryEntry)
+        }
+        Preferences.replaceSilo(silo, newSilo)
 
         if(!isInitialized) {
             createChannels(context)
