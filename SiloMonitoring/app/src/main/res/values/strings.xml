@@ -23,7 +23,7 @@
     <string name="delete">Löschen</string>
     <string name="delete_title">ACHTUNG!</string>
     <string name="delete_message">Bist du sicher, dass du das Silo löschen willst?</string>
-    <string name="empty">LEER</string>
+    <string name="empty">Das Silo ist leer!</string>
     <string name="empty_field">Das Feld darf nicht leer sein!</string>
     <string name="must_not_be_null">Muss größer als Null sein!</string>
     <string name="too_big">Darf nicht größer als Kapazität des Silos sein!</string>

@@ -124,8 +124,9 @@ class SiloFragment
         val daysLeft = ceil(contentLeft / silo?.needPerDay!!).toLong()
         val refillDate = LocalDate.now().plusDays(daysLeft)
 
-        binding.textViewFillLevelKg.text = if(contentLeft > 0.0) "${formatText(contentLeft)} kg ${getString(R.string.left)}" else getString(R.string.empty)
-        binding.textViewFillLevelPercentage.text = "${formatText(fillLevelPercent)} %"
+        binding.textViewFillLevelKg.text = if(contentLeft > 0.0)
+                "${formatText(contentLeft)} kg (${formatText(fillLevelPercent)}%) ${getString(R.string.left)}"
+            else getString(R.string.empty)
         binding.textViewCapacity.text = "${formatText(silo?.capacity!!)} kg"
         binding.textViewDate.text = dateFormatter.format(refillDate)
         binding.textViewNeedPerDay.text = "${formatText(silo?.needPerDay!!)} kg"
@@ -144,10 +145,7 @@ class SiloFragment
         val color = if(progress > 50)
             getColor(orange, green, 100 - progress)
         else getColor(orange, red, progress)
-
         binding.waveView.background = ColorDrawable(color)
-        binding.waveView.foreground = ColorDrawable(android.R.color.transparent)
-
     }
 
     private fun getColor(colorStart: Int, colorEnd: Int, percent: Int): Int {
