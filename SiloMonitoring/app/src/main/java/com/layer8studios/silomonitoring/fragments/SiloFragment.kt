@@ -144,7 +144,10 @@ class SiloFragment
         val color = if(progress > 50)
             getColor(orange, green, 100 - progress)
         else getColor(orange, red, progress)
+
         binding.waveView.background = ColorDrawable(color)
+        binding.waveView.foreground = ColorDrawable(android.R.color.transparent)
+
     }
 
     private fun getColor(colorStart: Int, colorEnd: Int, percent: Int): Int {
