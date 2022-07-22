@@ -28,6 +28,10 @@ class ViewHistoryAdapter(
             binding.imageButtonEdit.setOnClickListener {
                 // TODO
             }
+
+            binding.imageButtonDelete.setOnClickListener {
+                // TODO
+            }
         }
 
         fun bind(position: Int) {

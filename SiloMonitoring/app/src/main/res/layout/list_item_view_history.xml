@@ -102,7 +102,9 @@
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,6 +119,15 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_pencil_fill_gray"
             android:scaleType="fitCenter" />
+
+        <ImageButton
+            android:id="@+id/image_button_delete"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="6dp"
+            android:padding="6dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_delete_gray" />
 
     </LinearLayout>
 

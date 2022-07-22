@@ -31,7 +31,7 @@
     <string name="no_silos_created">Noch keine Silos erstellt</string>
     <string name="click_on_new_to_create_a_silo">Zum erstellen auf \'NEU\' klicken</string>
     <string name="left">übrig</string>
-    <string name="silo_history">Silo Verlauf</string>
+    <string name="silo_history">Verlauf</string>
     <string name="kg_were_refilled">kg wurden aufgefüllt</string>
     <string name="kg_have_been_taken_out">kg wurden herausgenommen</string>
 </resources>
