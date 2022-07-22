@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_view_history"
+        android:title="@string/text_view_history"
+        android:icon="@drawable/ic_list_ul"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
         android:id="@+id/action_edit"
         android:title="@string/text_edit"
         android:icon="@drawable/ic_pencil_fill"

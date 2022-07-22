@@ -11,24 +11,16 @@ object Utils {
 
     fun Date.toLocalDate(): LocalDate = LocalDate.of(year, month, dayOfMonth)
 
+    fun formatText(number: Double): String = String.format("%.2f", number).replace(".", ",")
 
     fun getContentLeft(silo: Silo): Double {
-        var contentLeft = silo.lastRefillQuantity
+        var contentLeft = 0.0
 
         silo.emptyingHistory.forEach { entry ->
-            val nextIndex = silo.emptyingHistory.indexOf(entry) + 1
-
-            val startDate = entry.date.toLocalDate()
-            val endDate = if(nextIndex >= silo.emptyingHistory.size)
-                LocalDate.now().minusDays(1)
-            else silo.emptyingHistory[nextIndex].date.toLocalDate()
-
-            for(date in startDate..endDate) {
-                if(date != LocalDate.now())
-                   contentLeft -= entry.needPerDay
-            }
+            if(entry.wasAdded)
+                contentLeft += entry.amount
+            else contentLeft -= entry.amount
         }
-
         return contentLeft
     }
 

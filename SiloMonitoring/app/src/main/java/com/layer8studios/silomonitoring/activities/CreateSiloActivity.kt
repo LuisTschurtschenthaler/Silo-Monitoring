@@ -3,6 +3,7 @@ package com.layer8studios.silomonitoring.activities
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -24,7 +25,7 @@ class CreateSiloActivity
 
     private lateinit var binding: ActivityCreateSiloBinding
     private var silo: Silo? = null
-
+    private var isEditingMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +36,22 @@ class CreateSiloActivity
         binding.toolbar.setNavigationOnClickListener { super.onBackPressed() }
 
         silo = intent.getParcelableExtra(ARG_SILO)
+        isEditingMode = (silo != null)
 
         val maxDay = LocalDate.now()
-        if(silo != null) {
+        if(isEditingMode) {
             binding.toolbar.title = getString(R.string.edit_silo)
             binding.textViewButton.text = getString(R.string.apply_changes)
 
-            val refillDate = silo!!.lastRefillDate.toLocalDate()
             binding.textEditSiloName.setText(silo!!.name)
             binding.textEditSiloCapacity.setText(silo!!.capacity.toString())
             binding.textEditSiloContent.setText(silo!!.content)
             binding.textEditNeedPerDay.setText(silo!!.needPerDay.toString())
-            binding.textEditLastDeliveryQuantity.setText(silo!!.lastRefillQuantity.toString())
-            binding.textViewSiloLastDeliveryDate.text = dateFormatter.format(refillDate)
+
+            binding.textViewSiloLastRefill.visibility = View.GONE
+            binding.textEditLastDeliveryQuantity.visibility = View.GONE
+            binding.textViewSiloLastDeliveryDate.visibility = View.GONE
+            binding.buttonSelectDate.visibility = View.GONE
         }
         else {
             binding.toolbar.title = getString(R.string.create_silo)
@@ -84,7 +88,6 @@ class CreateSiloActivity
             isEmpty(binding.textEditNeedPerDay, binding.textInputLayoutNeedPerDay)
             isEmpty(binding.textEditLastDeliveryQuantity, binding.textInputLayoutLastDeliveryQuantity)
 
-
             val isNull = { txtEdit: TextInputEditText, txtLayout: TextInputLayout ->
                 try {
                     if (txtEdit.text.toString().toDouble() <= 0.0) {
@@ -118,31 +121,22 @@ class CreateSiloActivity
                 isBigger(needPerDay, capacity, binding.textInputLayoutNeedPerDay)
 
                 if(!isError) {
-                    val newSilo = Silo(name, capacity, content, needPerDay, lastRefillQuantity, lastRefillDate.toDate())
+                    val today = LocalDate.now()
 
-                    if(silo == null) {
-                        newSilo.emptyingHistory.add(
-                            SiloHistoryEntry(lastRefillDate.toDate(), needPerDay)
-                        )
-
-                        Preferences.addSilo(newSilo)
-                        setResult(RESULT_OK)
-                    }
-                    else {
-                        silo!!.emptyingHistory.forEach { entry ->
-                            newSilo.emptyingHistory.add(entry)
-                        }
-
-                        val newHistoryEntry = SiloHistoryEntry(LocalDate.now().toDate(), needPerDay)
-                        if(newSilo.lastRefillDate != silo?.lastRefillDate) {
-                            newSilo.emptyingHistory.clear()
-                            newSilo.emptyingHistory.add(newHistoryEntry)
+                    if(isEditingMode) {
+                        val newSilo = silo!!.copy().apply {
+                            this.name = name
+                            this.capacity = capacity
+                            this.content = content
+                            this.needPerDay = needPerDay
                         }
 
                         if(newSilo.needPerDay != silo!!.needPerDay) {
-                            if(newHistoryEntry.date == newSilo.emptyingHistory.last().date)
+                            if(newSilo.emptyingHistory.last().date == today.toDate())
                                 newSilo.emptyingHistory.removeLast()
-                            newSilo.emptyingHistory.add(newHistoryEntry)
+                            newSilo.emptyingHistory.add(
+                                SiloHistoryEntry(today.toDate(), needPerDay)
+                            )
                         }
 
                         Preferences.replaceSilo(silo!!, newSilo)
@@ -150,6 +144,22 @@ class CreateSiloActivity
                             putExtra(ARG_SILO, newSilo)
                         }
                         setResult(RESULT_OK, intent)
+                    }
+                    else {
+                        val lastRefill = SiloHistoryEntry(lastRefillDate.toDate(), lastRefillQuantity, true)
+                        val newSilo = Silo(name, capacity, content, needPerDay, lastRefillQuantity, lastRefillDate.toDate(), mutableListOf(lastRefill))
+
+                        for(epochDay in lastRefillDate.toEpochDay()..today.toEpochDay()) {
+                            val date = LocalDate.ofEpochDay(epochDay)
+                            if(date != lastRefillDate) {
+                                newSilo.emptyingHistory.add(
+                                    SiloHistoryEntry(date.toDate(), needPerDay)
+                                )
+                            }
+                        }
+
+                        Preferences.addSilo(newSilo)
+                        setResult(RESULT_OK)
                     }
 
                     finish()

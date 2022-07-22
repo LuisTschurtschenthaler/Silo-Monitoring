@@ -6,7 +6,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class SiloHistoryEntry(
     val date: Date,
-    val needPerDay: Double
+    val amount: Double,
+    val wasAdded: Boolean = false
 ) : Parcelable
 
 

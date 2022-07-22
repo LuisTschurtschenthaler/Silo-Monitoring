@@ -28,6 +28,9 @@
         <activity android:name=".activities.CreateSiloActivity"
             android:parentActivityName=".activities.MainActivity" />
 
+        <activity android:name=".activities.ViewHistoryActivity"
+            android:parentActivityName=".activities.MainActivity" />
+
 
         <receiver
             android:name=".receivers.BootCompletedReceiver"

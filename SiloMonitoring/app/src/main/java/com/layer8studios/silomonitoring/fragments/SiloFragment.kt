@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.activities.CreateSiloActivity
 import com.layer8studios.silomonitoring.activities.MainActivity
+import com.layer8studios.silomonitoring.activities.ViewHistoryActivity
 import com.layer8studios.silomonitoring.databinding.FragmentSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.utils.ARG_SILO
@@ -66,6 +67,13 @@ class SiloFragment
         binding.toolbar.inflateMenu(R.menu.silo_menu)
         binding.toolbar.setOnMenuItemClickListener { item ->
             when(item.itemId) {
+                R.id.action_view_history -> {
+                    val intent = Intent(requireContext(), ViewHistoryActivity::class.java).apply {
+                        putExtra(ARG_SILO, silo)
+                    }
+                    startActivity(intent)
+                }
+
                 R.id.action_edit -> {
                     val intent = Intent(requireContext(), CreateSiloActivity::class.java).apply {
                         putExtra(ARG_SILO, silo)
@@ -110,13 +118,7 @@ class SiloFragment
         if(silo == null)
             return
 
-        println(silo)
-
         binding.toolbar.title = "${silo?.name} (${silo?.content})"
-
-        fun formatText(number: Double): String {
-            return String.format("%.2f", number).replace(".", ",")
-        }
 
         val contentLeft = Utils.getContentLeft(silo!!)
         fillLevelPercent = (contentLeft / silo?.capacity!!) * 100
@@ -125,11 +127,11 @@ class SiloFragment
         val refillDate = LocalDate.now().plusDays(daysLeft)
 
         binding.textViewFillLevelKg.text = if(contentLeft > 0.0)
-                "${formatText(contentLeft)} kg (${formatText(fillLevelPercent)}%) ${getString(R.string.left)}"
+                "${Utils.formatText(contentLeft)} kg (${Utils.formatText(fillLevelPercent)}%) ${getString(R.string.left)}"
             else getString(R.string.empty)
-        binding.textViewCapacity.text = "${formatText(silo?.capacity!!)} kg"
+        binding.textViewCapacity.text = "${Utils.formatText(silo?.capacity!!)} kg"
         binding.textViewDate.text = dateFormatter.format(refillDate)
-        binding.textViewNeedPerDay.text = "${formatText(silo?.needPerDay!!)} kg"
+        binding.textViewNeedPerDay.text = "${Utils.formatText(silo?.needPerDay!!)} kg"
 
         var progress = fillLevelPercent.toInt()
         if(progress >= 95)

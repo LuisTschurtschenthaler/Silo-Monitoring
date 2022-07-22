@@ -77,7 +77,7 @@ class ReminderReceiver
 
         val silo = intent.getParcelableExtra<Silo>(ARG_SILO)
         val newSilo = (silo?.copy() as Silo).apply {
-            val newHistoryEntry = SiloHistoryEntry(LocalDate.now().toDate(), silo.needPerDay)
+            val newHistoryEntry = SiloHistoryEntry(LocalDate.now().toDate(), silo.needPerDay, false)
             emptyingHistory.add(newHistoryEntry)
         }
         Preferences.replaceSilo(silo, newSilo)
