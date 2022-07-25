@@ -86,7 +86,7 @@ class CreateSiloActivity
             isEmpty(binding.textEditSiloCapacity, binding.textInputLayoutSiloCapacity)
             isEmpty(binding.textEditSiloContent, binding.textInputLayoutSiloContent)
             isEmpty(binding.textEditNeedPerDay, binding.textInputLayoutNeedPerDay)
-            isEmpty(binding.textEditLastDeliveryQuantity, binding.textInputLayoutLastDeliveryQuantity)
+            if(!isEditingMode) isEmpty(binding.textEditLastDeliveryQuantity, binding.textInputLayoutLastDeliveryQuantity)
 
             val isNull = { txtEdit: TextInputEditText, txtLayout: TextInputLayout ->
                 try {
@@ -99,7 +99,7 @@ class CreateSiloActivity
 
             isNull(binding.textEditSiloCapacity, binding.textInputLayoutSiloCapacity)
             isNull(binding.textEditNeedPerDay, binding.textInputLayoutNeedPerDay)
-            isNull(binding.textEditLastDeliveryQuantity, binding.textInputLayoutLastDeliveryQuantity)
+            if(!isEditingMode) isNull(binding.textEditLastDeliveryQuantity, binding.textInputLayoutLastDeliveryQuantity)
             if(isError) return@setOnClickListener
 
             try {
@@ -107,8 +107,8 @@ class CreateSiloActivity
                 val capacity = binding.textEditSiloCapacity.text.toString().toDouble()
                 val content = binding.textEditSiloContent.text.toString()
                 val needPerDay = binding.textEditNeedPerDay.text.toString().toDouble()
-                val lastRefillQuantity = binding.textEditLastDeliveryQuantity.text.toString().toDouble()
-                val lastRefillDate = LocalDate.parse(binding.textViewSiloLastDeliveryDate.text, dateFormatter)
+                val lastRefillQuantity = if(isEditingMode) 0.0 else binding.textEditLastDeliveryQuantity.text.toString().toDouble()
+                val lastRefillDate = if(isEditingMode) LocalDate.now() else LocalDate.parse(binding.textViewSiloLastDeliveryDate.text, dateFormatter)
 
                 val isBigger = { one: Double, two: Double, txtLayout: TextInputLayout ->
                     if(one > two) {
@@ -117,7 +117,7 @@ class CreateSiloActivity
                     }
                     else txtLayout.error = null
                 }
-                isBigger(lastRefillQuantity, capacity, binding.textInputLayoutLastDeliveryQuantity)
+                if(!isEditingMode) isBigger(lastRefillQuantity, capacity, binding.textInputLayoutLastDeliveryQuantity)
                 isBigger(needPerDay, capacity, binding.textInputLayoutNeedPerDay)
 
                 if(!isError) {
