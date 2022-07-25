@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.layer8studios.silomonitoring.R
-import com.layer8studios.silomonitoring.databinding.DialogEditEntryBinding
+import com.layer8studios.silomonitoring.databinding.DialogCreateEntryBinding
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.models.SiloHistoryEntry
 import com.layer8studios.silomonitoring.utils.Preferences
@@ -18,7 +18,7 @@ import java.time.LocalDate
 import java.util.*
 
 
-class DialogEditEntry(
+class DialogCreateEntry(
     private val dialogCloseListener: OnDialogCloseListener,
     private val silo: Silo?
 ) : DialogFragment() {
@@ -27,11 +27,11 @@ class DialogEditEntry(
         fun onDialogClosed(silo: Silo)
     }
 
-    private lateinit var binding: DialogEditEntryBinding
+    private lateinit var binding: DialogCreateEntryBinding
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogEditEntryBinding.inflate(layoutInflater)
+        binding = DialogCreateEntryBinding.inflate(layoutInflater)
 
         binding.radioButtons.setOnCheckedChangeListener { _, id ->
             binding.radioButtonAdd.isChecked = false

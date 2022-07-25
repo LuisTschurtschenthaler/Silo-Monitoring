@@ -26,6 +26,8 @@ class MainActivity
         if(!Preferences.isInitialized())
             Preferences.init(this)
 
+        Utils.checkSilos()
+
         if(!ReminderReceiver.isInitialized)
             ReminderReceiver.initialize(applicationContext)
 
@@ -45,8 +47,8 @@ class MainActivity
 
     override fun onResume() {
         super.onResume()
-        Utils.checkSilos()
         adapter.update()
+        // TODO(DOES NOT UPDATE PROPERLY WHEN EDITING HISTORY)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -5,19 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.adapters.ViewHistoryAdapter
 import com.layer8studios.silomonitoring.databinding.ActivityViewHistoryBinding
-import com.layer8studios.silomonitoring.databinding.DialogEditEntryBinding
-import com.layer8studios.silomonitoring.dialogs.DialogEditEntry
+import com.layer8studios.silomonitoring.dialogs.DialogCreateEntry
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.utils.ARG_SILO
-import com.layer8studios.silomonitoring.utils.Utils.toLocalDate
 
 
 class ViewHistoryActivity
-    : AppCompatActivity(), DialogEditEntry.OnDialogCloseListener {
+    : AppCompatActivity(), DialogCreateEntry.OnDialogCloseListener {
 
     private lateinit var binding: ActivityViewHistoryBinding
     private lateinit var adapter: ViewHistoryAdapter
     private var silo: Silo? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +29,7 @@ class ViewHistoryActivity
         binding.toolbar.setOnMenuItemClickListener { item ->
             when(item.itemId) {
                 R.id.action_add_item -> {
-                    DialogEditEntry(this, silo)
+                    DialogCreateEntry(this, silo)
                         .show(supportFragmentManager, "")
                 }
             }
