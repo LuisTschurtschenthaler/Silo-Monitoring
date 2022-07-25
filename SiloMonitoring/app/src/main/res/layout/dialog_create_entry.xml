@@ -17,7 +17,7 @@
             android:id="@+id/radio_button_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Silo auffüllen"
+            android:text="@string/fill_silo"
             android:textColor="@color/white"
             android:checked="true" />
 
@@ -25,7 +25,7 @@
             android:id="@+id/radio_button_remove"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Silo entleeren"
+            android:text="@string/empty_silo"
             android:textColor="@color/white" />
 
     </RadioGroup>
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Menge (z.B. 100 kg)"
+        android:hint="@string/amount_example"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Datum"
+        android:text="@string/date"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

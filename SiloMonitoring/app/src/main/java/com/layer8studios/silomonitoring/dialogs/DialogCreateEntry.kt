@@ -61,9 +61,9 @@ class DialogCreateEntry(
 
         val builder = AlertDialog.Builder(context).apply {
             setView(binding.root)
-            setTitle("Eintrag erstellen")
+            setTitle(R.string.create_entry)
             setNegativeButton(getString(R.string.cancel), null)
-            setPositiveButton("Hinzufügen", null)
+            setPositiveButton(getString(R.string.add), null)
         }
 
         return builder.create().apply {
@@ -82,9 +82,9 @@ class DialogCreateEntry(
                     else if(amount.toDouble() > silo.capacity)
                         setError(getString(R.string.too_big))
                     else if(binding.radioButtonAdd.isChecked && contentLeft + amount.toDouble() > silo.capacity)
-                        setError("Zu viel dem Silo hinzugefügt!")
+                        setError(getString(R.string.too_much_added))
                     else if(binding.radioButtonRemove.isChecked && contentLeft - amount.toDouble() < 0.0)
-                        setError("Zu viel aus dem Silo entnommen!")
+                        setError(getString(R.string.too_much_removed))
                     else {
                         val entry = SiloHistoryEntry(
                             LocalDate.parse(binding.textViewSelectedDate.text, dateFormatter).toDate(),
@@ -96,7 +96,7 @@ class DialogCreateEntry(
                         newSilo.emptyingHistory.add(entry)
 
                         Preferences.replaceSilo(silo, newSilo)
-                        Toast.makeText(requireContext(), "Element wurde hinzugefügt", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.element_was_added), Toast.LENGTH_SHORT).show()
                         dismiss()
 
                         dialogCloseListener.onDialogClosed(newSilo)

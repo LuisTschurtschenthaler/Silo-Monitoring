@@ -35,4 +35,13 @@
     <string name="silo_history">Verlauf</string>
     <string name="kg_were_refilled">kg wurden aufgefüllt</string>
     <string name="kg_have_been_taken_out">kg wurden herausgenommen</string>
+    <string name="date">Datum</string>
+    <string name="amount_example">Menge (z.B. 100 kg)</string>
+    <string name="fill_silo">Silo auffüllen</string>
+    <string name="empty_silo">Silo entleeren</string>
+    <string name="create_entry">Eintrag erstellen</string>
+    <string name="add">Hinzufügen</string>
+    <string name="too_much_added">Zu viel dem Silo hinzugefügt!</string>
+    <string name="too_much_removed">Zu viel aus dem Silo entnommen!</string>
+    <string name="element_was_added">Element wurde hinzugefügt</string>
 </resources>
