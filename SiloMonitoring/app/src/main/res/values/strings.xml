@@ -45,4 +45,5 @@
     <string name="too_much_added">Zu viel dem Silo hinzugefügt!</string>
     <string name="too_much_removed">Zu viel aus dem Silo entnommen!</string>
     <string name="element_was_added">Element wurde hinzugefügt</string>
+    <string name="element_was_removed">Element wurde gelöscht</string>
 </resources>

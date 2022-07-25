@@ -48,8 +48,12 @@ object Utils {
             Preferences.replaceSilo(silosOriginal[i], silos[i])
             i++
         }
+    }
 
-
+    fun sortHistory(silo: Silo) {
+        silo.emptyingHistory.sortBy { it.amount }
+        silo.emptyingHistory.sortBy { it.wasAdded }
+        silo.emptyingHistory.sortByDescending { it.date.toLocalDate() }
     }
 
 }

@@ -61,13 +61,10 @@ object Preferences {
     fun getSilos(): ArrayList<Silo> {
         val json = preferences.getString(SILOS, null)
         val type = object: TypeToken<ArrayList<Silo>?>() { }.type
-        val silos: ArrayList<Silo> = GsonBuilder().create().fromJson(json, type) ?: ArrayList()
+        val silos = GsonBuilder().create().fromJson(json, type) ?: ArrayList<Silo>()
 
-        for(silo in silos) {
-            silo.emptyingHistory.sortBy { it.amount }
-            silo.emptyingHistory.sortBy { it.wasAdded }
-            silo.emptyingHistory.sortByDescending { it.date.toLocalDate() }
-        }
+        for(silo in silos)
+            Utils.sortHistory(silo)
 
         return silos
     }

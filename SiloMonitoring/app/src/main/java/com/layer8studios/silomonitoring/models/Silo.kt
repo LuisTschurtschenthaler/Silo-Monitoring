@@ -17,7 +17,5 @@ data class Silo(
     var capacity: Double,
     var content: String,
     var needPerDay: Double,
-    var lastRefillQuantity: Double,
-    var lastRefillDate: Date,
     var emptyingHistory: MutableList<SiloHistoryEntry> = mutableListOf()
 ) : Parcelable

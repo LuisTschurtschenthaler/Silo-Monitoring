@@ -14,7 +14,6 @@ import com.layer8studios.silomonitoring.models.SiloHistoryEntry
 import com.layer8studios.silomonitoring.utils.ARG_SILO
 import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.Utils.toDate
-import com.layer8studios.silomonitoring.utils.Utils.toLocalDate
 import com.layer8studios.silomonitoring.utils.dateFormatter
 import java.time.LocalDate
 import java.util.*
@@ -148,7 +147,7 @@ class CreateSiloActivity
                     }
                     else {
                         val lastRefill = SiloHistoryEntry(lastRefillDate.toDate(), lastRefillQuantity, true)
-                        val newSilo = Silo(name, capacity, content, needPerDay, lastRefillQuantity, lastRefillDate.toDate(), mutableListOf(lastRefill))
+                        val newSilo = Silo(name, capacity, content, needPerDay, mutableListOf(lastRefill))
 
                         for(epochDay in lastRefillDate.toEpochDay()..today.toEpochDay()) {
                             val date = LocalDate.ofEpochDay(epochDay)

@@ -29,7 +29,6 @@ class SiloFragment
     : Fragment() {
 
     companion object {
-
         fun newInstance(silo: Silo): SiloFragment {
             val fragment = SiloFragment()
             val args = Bundle().apply {

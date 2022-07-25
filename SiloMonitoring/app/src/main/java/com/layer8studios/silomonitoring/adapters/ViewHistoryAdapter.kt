@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.databinding.ListItemViewHistoryBinding
@@ -20,12 +21,6 @@ class ViewHistoryAdapter(
 ) : RecyclerView.Adapter<ViewHistoryAdapter.ViewHolder>() {
 
     private var history = silo?.emptyingHistory!!
-
-    fun setSilo(silo: Silo) {
-        this.silo = silo
-        this.history = silo.emptyingHistory
-        notifyDataSetChanged()
-    }
 
 
     inner class ViewHolder(
@@ -48,6 +43,7 @@ class ViewHistoryAdapter(
                         notifyItemRemoved(position)
 
                         Preferences.setHistory(silo!!, history)
+                        Toast.makeText(context, context.getString(R.string.element_was_removed), Toast.LENGTH_SHORT).show()
                     }
                     .create()
                     .show()
@@ -82,5 +78,14 @@ class ViewHistoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(position)
 
     override fun getItemCount(): Int = history.size
+
+
+    fun setSilo(silo: Silo) {
+        Utils.sortHistory(silo)
+
+        this.silo = silo
+        this.history = silo.emptyingHistory
+        notifyDataSetChanged()
+    }
 
 }
