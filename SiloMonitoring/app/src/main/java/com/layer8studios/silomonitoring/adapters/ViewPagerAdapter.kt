@@ -1,5 +1,6 @@
 package com.layer8studios.silomonitoring.adapters
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -12,17 +13,18 @@ class ViewPagerAdapter(
     private val fragmentActivity: FragmentActivity
 ): FragmentStateAdapter(fragmentActivity) {
 
-    private var silos: ArrayList<Silo> = Preferences.getSilos()
+    private var silos = Preferences.getSilos()
 
-    fun removeSilo(silo: Silo) {
-        val index = silos.indexOf(silo)
-        silos.remove(silo)
-        notifyItemRemoved(index)
-    }
 
     fun update() {
         this.silos = Preferences.getSilos()
         notifyDataSetChanged()
+    }
+
+    fun remove(silo: Silo) {
+        val index = silos.indexOf(silo)
+        silos.remove(silo)
+        notifyItemRemoved(index)
     }
 
     override fun createFragment(position: Int): Fragment {

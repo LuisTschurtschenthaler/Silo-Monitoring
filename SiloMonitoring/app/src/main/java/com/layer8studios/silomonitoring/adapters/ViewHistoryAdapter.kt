@@ -1,5 +1,6 @@
 package com.layer8studios.silomonitoring.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.databinding.ListItemViewHistoryBinding
 import com.layer8studios.silomonitoring.models.Silo
+import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.Utils
 import com.layer8studios.silomonitoring.utils.Utils.toLocalDate
 import com.layer8studios.silomonitoring.utils.dateFormatter
@@ -14,15 +16,17 @@ import com.layer8studios.silomonitoring.utils.dateFormatter
 
 class ViewHistoryAdapter(
     private val context: Context,
-    private val silo: Silo?
+    private var silo: Silo?
 ) : RecyclerView.Adapter<ViewHistoryAdapter.ViewHolder>() {
 
     private var history = silo?.emptyingHistory!!
 
     fun setSilo(silo: Silo) {
+        this.silo = silo
         this.history = silo.emptyingHistory
         notifyDataSetChanged()
     }
+
 
     inner class ViewHolder(
         private val binding: ListItemViewHistoryBinding
@@ -34,7 +38,19 @@ class ViewHistoryAdapter(
             }
 
             binding.imageButtonDelete.setOnClickListener {
-                // TODO
+                AlertDialog.Builder(context)
+                    .setTitle(context.getString(R.string.delete_title))
+                    .setMessage(context.getString(R.string.delete_message_entry))
+                    .setNegativeButton(context.getString(R.string.cancel), null)
+                    .setPositiveButton(context.getString(R.string.delete)) { _, _ ->
+                        val position = adapterPosition
+                        history.removeAt(position)
+                        notifyItemRemoved(position)
+
+                        Preferences.setHistory(silo!!, history)
+                    }
+                    .create()
+                    .show()
             }
         }
 

@@ -28,6 +28,13 @@ object Preferences {
     }
 
 
+    fun setHistory(silo: Silo, history: MutableList<SiloHistoryEntry>) {
+        val newSilo = silo.copy().apply {
+            emptyingHistory = history
+        }
+        replaceSilo(silo, newSilo)
+    }
+
     fun addSilo(silo: Silo) {
         val silos = getSilos()
         silos.add(silo)

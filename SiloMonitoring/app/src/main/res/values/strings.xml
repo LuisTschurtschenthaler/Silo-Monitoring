@@ -25,6 +25,7 @@
     <string name="delete">Löschen</string>
     <string name="delete_title">ACHTUNG!</string>
     <string name="delete_message">Bist du sicher, dass du das Silo löschen willst?</string>
+    <string name="delete_message_entry">Bist du sicher, dass du den Eintrag löschen willst?</string>
     <string name="empty">Das Silo ist leer!</string>
     <string name="empty_field">Das Feld darf nicht leer sein!</string>
     <string name="must_not_be_null">Muss größer als Null sein!</string>

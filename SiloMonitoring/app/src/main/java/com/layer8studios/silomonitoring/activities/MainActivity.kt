@@ -47,8 +47,10 @@ class MainActivity
 
     override fun onResume() {
         super.onResume()
+
         adapter.update()
-        // TODO(DOES NOT UPDATE PROPERLY WHEN EDITING HISTORY)
+        binding.viewPager.adapter = adapter
+        updateLayouts()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -63,7 +65,8 @@ class MainActivity
 
 
     fun removeItem(silo: Silo) {
-        adapter.removeSilo(silo)
+        adapter.remove(silo)
+        binding.viewPager.adapter = adapter
         updateLayouts()
     }
 
