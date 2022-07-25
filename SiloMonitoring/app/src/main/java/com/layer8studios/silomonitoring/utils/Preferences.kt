@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.layer8studios.silomonitoring.models.Silo
+import com.layer8studios.silomonitoring.models.SiloHistoryEntry
+import com.layer8studios.silomonitoring.utils.Utils.toLocalDate
 
 
 object Preferences {
@@ -48,7 +50,14 @@ object Preferences {
     fun getSilos(): ArrayList<Silo> {
         val json = preferences.getString(SILOS, null)
         val type = object: TypeToken<ArrayList<Silo>?>() { }.type
-        return GsonBuilder().create().fromJson(json, type) ?: ArrayList()
+        val silos: ArrayList<Silo> = GsonBuilder().create().fromJson(json, type) ?: ArrayList()
+
+        for(silo in silos) {
+            silo.emptyingHistory.sortByDescending { it.date.toLocalDate() }
+            silo.emptyingHistory.sortBy { it.wasAdded }
+        }
+
+        return silos
     }
 
 

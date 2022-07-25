@@ -24,7 +24,6 @@ class ViewHistoryActivity
         binding.toolbar.setNavigationOnClickListener { super.onBackPressed() }
 
         val silo = intent?.getParcelableExtra<Silo>(ARG_SILO)
-        silo?.emptyingHistory?.sortByDescending { it.date.toLocalDate() }
         binding.recyclerViewHistory.adapter = ViewHistoryAdapter(this, silo)
     }
 

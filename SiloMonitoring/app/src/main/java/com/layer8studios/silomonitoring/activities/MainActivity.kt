@@ -10,6 +10,7 @@ import com.layer8studios.silomonitoring.databinding.ActivityMainBinding
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.receivers.ReminderReceiver
 import com.layer8studios.silomonitoring.utils.Preferences
+import com.layer8studios.silomonitoring.utils.Utils
 
 
 class MainActivity
@@ -40,6 +41,11 @@ class MainActivity
             val intent = Intent(this, CreateSiloActivity::class.java)
             startActivityForResult(intent, 0)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Utils.checkSilos()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

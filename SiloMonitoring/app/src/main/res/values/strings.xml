@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Silo Überwachung</string>
     <string name="text_new">Neu</string>
-    <string name="text_view_history"></string>
+    <string name="text_view_history">Verlauf</string>
     <string name="text_edit">Bearbeiten</string>
     <string name="text_delete">Löschen</string>
     <string name="text_fill_level">Füllstand:</string>

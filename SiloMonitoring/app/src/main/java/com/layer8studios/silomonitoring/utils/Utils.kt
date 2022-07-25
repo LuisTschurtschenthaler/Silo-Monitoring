@@ -2,6 +2,7 @@ package com.layer8studios.silomonitoring.utils
 
 import com.layer8studios.silomonitoring.models.Date
 import com.layer8studios.silomonitoring.models.Silo
+import com.layer8studios.silomonitoring.models.SiloHistoryEntry
 import java.time.LocalDate
 
 
@@ -22,6 +23,33 @@ object Utils {
             else contentLeft -= entry.amount
         }
         return contentLeft
+    }
+
+    fun checkSilos() {
+        val silosOriginal = Preferences.getSilos()
+        val silos = Preferences.getSilos()
+
+        var i = 0
+        silos.forEach { silo ->
+            val lastDate = silo.emptyingHistory.last().date.toLocalDate()
+            val today = LocalDate.now()
+
+            for(date in lastDate..today) {
+                if(date == today) continue
+
+                val dayEntries = silo.emptyingHistory.filter { it.date == date.toDate() }
+                if(dayEntries.find { !it.wasAdded } == null) {
+                    silo.emptyingHistory.add(
+                        SiloHistoryEntry(date.toDate(), silo.needPerDay)
+                    )
+                }
+            }
+
+            Preferences.replaceSilo(silosOriginal[i], silos[i])
+            i++
+        }
+
+
     }
 
 }
