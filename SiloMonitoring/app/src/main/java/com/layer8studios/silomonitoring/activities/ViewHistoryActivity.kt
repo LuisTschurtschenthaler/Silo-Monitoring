@@ -29,7 +29,7 @@ class ViewHistoryActivity
         binding.toolbar.setOnMenuItemClickListener { item ->
             when(item.itemId) {
                 R.id.action_add_item -> {
-                    DialogCreateEntry(this, silo)
+                    DialogCreateEntry(this, silo!!)
                         .show(supportFragmentManager, "")
                 }
             }

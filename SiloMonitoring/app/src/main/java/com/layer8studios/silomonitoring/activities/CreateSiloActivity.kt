@@ -11,6 +11,7 @@ import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.databinding.ActivityCreateSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.models.SiloHistoryEntry
+import com.layer8studios.silomonitoring.receivers.NotificationReceiver
 import com.layer8studios.silomonitoring.utils.ARG_SILO
 import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.Utils.toDate
@@ -159,6 +160,8 @@ class CreateSiloActivity
                         }
 
                         Preferences.addSilo(newSilo)
+                        NotificationReceiver.scheduleNotification(this, newSilo)
+
                         setResult(RESULT_OK)
                     }
 

@@ -21,7 +21,7 @@ import java.util.*
 
 class DialogCreateEntry(
     private val dialogCloseListener: OnDialogCloseListener,
-    private val silo: Silo?,
+    private val silo: Silo,
     private val historyEntry: SiloHistoryEntry? = null
 ) : DialogFragment() {
 
@@ -50,15 +50,15 @@ class DialogCreateEntry(
             }
         }
 
-        val yesterday = LocalDate.now().minusDays(1)
+        val today = LocalDate.now()
         binding.buttonSelectDate.setOnClickListener {
             val calendar = Calendar.getInstance().apply {
-                set(yesterday.year, yesterday.monthValue, yesterday.dayOfMonth)
+                set(today.year, today.monthValue, today.dayOfMonth)
             }
 
             DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
                 binding.textViewSelectedDate.text = dateFormatter.format(LocalDate.of(year, month, dayOfMonth))
-            }, yesterday.year, yesterday.monthValue, yesterday.dayOfMonth).apply {
+            }, today.year, today.monthValue, today.dayOfMonth).apply {
                 datePicker.maxDate = calendar.timeInMillis
                 show()
             }
@@ -78,7 +78,7 @@ class DialogCreateEntry(
                         binding.textInputLayoutAmount.error = error
                     }
 
-                    val contentLeft = Utils.getContentLeft(silo!!)
+                    val contentLeft = Utils.getContentLeft(silo)
                     val amount = binding.textEditAmount.text.toString()
                     if(amount.isEmpty())
                         setError(getString(R.string.empty_field))
@@ -100,10 +100,12 @@ class DialogCreateEntry(
                         val newSilo = silo.copy()
                         if(isEditing)
                             newSilo.emptyingHistory.remove(historyEntryOriginal)
+
                         newSilo.emptyingHistory.add(entry)
 
                         Preferences.replaceSilo(silo, newSilo)
-                        Toast.makeText(requireContext(), getString(R.string.element_was_added), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), if(isEditing) getString(R.string.element_was_edited)
+                            else getString(R.string.element_was_added), Toast.LENGTH_SHORT).show()
                         dismiss()
 
                         dialogCloseListener.onDialogClosed(newSilo)
@@ -119,12 +121,12 @@ class DialogCreateEntry(
             binding.radioButtonAdd.isChecked = historyEntry!!.wasAdded
             binding.radioButtonRemove.isChecked = !historyEntry.wasAdded
 
-            binding.textEditAmount.setText(Utils.formatText(historyEntry.amount))
+            binding.textEditAmount.setText(historyEntry.amount.toString())
             binding.textViewSelectedDate.text = dateFormatter.format(historyEntry.date.toLocalDate())
         }
         else {
-            val yesterday = LocalDate.now().minusDays(1)
-            binding.textViewSelectedDate.text = dateFormatter.format(yesterday)
+            val today = LocalDate.now()
+            binding.textViewSelectedDate.text = dateFormatter.format(today)
         }
     }
 

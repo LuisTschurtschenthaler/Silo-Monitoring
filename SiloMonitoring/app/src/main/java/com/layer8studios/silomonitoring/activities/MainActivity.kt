@@ -8,7 +8,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.layer8studios.silomonitoring.adapters.ViewPagerAdapter
 import com.layer8studios.silomonitoring.databinding.ActivityMainBinding
 import com.layer8studios.silomonitoring.models.Silo
-import com.layer8studios.silomonitoring.receivers.ReminderReceiver
+import com.layer8studios.silomonitoring.receivers.NotificationReceiver
 import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.Utils
 
@@ -27,9 +27,7 @@ class MainActivity
             Preferences.init(this)
 
         Utils.checkSilos()
-
-        if(!ReminderReceiver.isInitialized)
-            ReminderReceiver.initialize(applicationContext)
+        NotificationReceiver.scheduleNotifications(applicationContext)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

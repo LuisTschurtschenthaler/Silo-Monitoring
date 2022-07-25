@@ -34,7 +34,7 @@ class ViewHistoryAdapter(
             binding.imageButtonEdit.setOnClickListener {
                 val position = adapterPosition
                 val item = history[position]
-                DialogCreateEntry(this@ViewHistoryAdapter, silo, item)
+                DialogCreateEntry(this@ViewHistoryAdapter, silo!!, item)
                     .show(fragmentManager, "")
             }
 

@@ -42,7 +42,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receivers.ReminderReceiver"
+        <receiver android:name=".receivers.NotificationReceiver"
             android:enabled="true"
             android:exported="false" />
 
