@@ -5,9 +5,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.databinding.ListItemViewHistoryBinding
+import com.layer8studios.silomonitoring.dialogs.DialogCreateEntry
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.Utils
@@ -17,8 +19,9 @@ import com.layer8studios.silomonitoring.utils.dateFormatter
 
 class ViewHistoryAdapter(
     private val context: Context,
+    private val fragmentManager: FragmentManager,
     private var silo: Silo?
-) : RecyclerView.Adapter<ViewHistoryAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ViewHistoryAdapter.ViewHolder>(), DialogCreateEntry.OnDialogCloseListener {
 
     private var history = silo?.emptyingHistory!!
 
@@ -29,7 +32,10 @@ class ViewHistoryAdapter(
 
         init {
             binding.imageButtonEdit.setOnClickListener {
-                // TODO
+                val position = adapterPosition
+                val item = history[position]
+                DialogCreateEntry(this@ViewHistoryAdapter, silo, item)
+                    .show(fragmentManager, "")
             }
 
             binding.imageButtonDelete.setOnClickListener {
@@ -78,6 +84,8 @@ class ViewHistoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(position)
 
     override fun getItemCount(): Int = history.size
+
+    override fun onDialogClosed(silo: Silo) = setSilo(silo)
 
 
     fun setSilo(silo: Silo) {

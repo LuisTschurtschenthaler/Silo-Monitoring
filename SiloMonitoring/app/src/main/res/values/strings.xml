@@ -20,7 +20,7 @@
     <string name="create_silo">Silo erstellen</string>
     <string name="create">Erstellen</string>
     <string name="edit_silo">Silo bearbeiten</string>
-    <string name="apply_changes">Änderungen anwenden</string>
+    <string name="apply_changes">Übernehmen</string>
     <string name="cancel">Abbrechen</string>
     <string name="delete">Löschen</string>
     <string name="delete_title">ACHTUNG!</string>
@@ -41,6 +41,7 @@
     <string name="fill_silo">Silo auffüllen</string>
     <string name="empty_silo">Silo entleeren</string>
     <string name="create_entry">Eintrag erstellen</string>
+    <string name="edit_entry">Eintrag bearbeiten</string>
     <string name="add">Hinzufügen</string>
     <string name="too_much_added">Zu viel dem Silo hinzugefügt!</string>
     <string name="too_much_removed">Zu viel aus dem Silo entnommen!</string>

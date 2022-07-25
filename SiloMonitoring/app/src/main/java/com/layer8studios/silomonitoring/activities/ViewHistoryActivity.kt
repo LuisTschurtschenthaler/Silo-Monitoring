@@ -37,7 +37,7 @@ class ViewHistoryActivity
         }
 
         silo = intent?.getParcelableExtra(ARG_SILO)
-        adapter = ViewHistoryAdapter(this, silo)
+        adapter = ViewHistoryAdapter(this, supportFragmentManager, silo)
         binding.recyclerViewHistory.adapter = adapter
     }
 
