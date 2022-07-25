@@ -19,6 +19,10 @@ class ViewHistoryAdapter(
 
     private var history = silo?.emptyingHistory!!
 
+    fun setSilo(silo: Silo) {
+        this.history = silo.emptyingHistory
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(
         private val binding: ListItemViewHistoryBinding

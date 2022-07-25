@@ -36,7 +36,11 @@ object Preferences {
 
     fun replaceSilo(oldSilo: Silo, newSilo: Silo) {
         val silos = getSilos()
-        val item = silos.indexOf(oldSilo)
+        val silo = silos.find { it.name == oldSilo.name
+                && it.content == oldSilo.content
+                && it.capacity == oldSilo.capacity
+        }
+        val item = silos.indexOf(silo)
         silos[item] = newSilo
         saveSilos(silos)
     }
@@ -53,8 +57,9 @@ object Preferences {
         val silos: ArrayList<Silo> = GsonBuilder().create().fromJson(json, type) ?: ArrayList()
 
         for(silo in silos) {
-            silo.emptyingHistory.sortByDescending { it.date.toLocalDate() }
+            silo.emptyingHistory.sortBy { it.amount }
             silo.emptyingHistory.sortBy { it.wasAdded }
+            silo.emptyingHistory.sortByDescending { it.date.toLocalDate() }
         }
 
         return silos

@@ -46,6 +46,7 @@ class MainActivity
     override fun onResume() {
         super.onResume()
         Utils.checkSilos()
+        adapter.update()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

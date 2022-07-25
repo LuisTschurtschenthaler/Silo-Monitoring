@@ -17,7 +17,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/black_secondary"
             app:title="@string/create_silo"
-            app:navigationIcon="@drawable/ic_arrow_back" />
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:menu="@menu/silo_history" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
