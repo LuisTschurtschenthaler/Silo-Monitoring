@@ -2,6 +2,7 @@ package com.layer8studios.silomonitoring.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 
 @Parcelize
@@ -20,5 +21,5 @@ data class Silo(
     var needPerDay: Double,
     var daysBeforeNotification: Long,
     var emptyingHistory: MutableList<SiloHistoryEntry> = mutableListOf(),
-    val notificationID: Int = (0..Int.MAX_VALUE).random()
+    val notificationID: Int = Calendar.getInstance().timeInMillis.toInt()
 ) : Parcelable
