@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdRequest
 import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.activities.CreateSiloActivity
 import com.layer8studios.silomonitoring.activities.MainActivity
@@ -54,6 +55,10 @@ class SiloFragment
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSiloBinding.inflate(inflater, container, false)
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
         return binding.root
     }
 
