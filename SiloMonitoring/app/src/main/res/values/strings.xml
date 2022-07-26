@@ -50,10 +50,8 @@
     <string name="element_was_added">Element wurde hinzugefügt</string>
     <string name="element_was_removed">Element wurde gelöscht</string>
     <string name="element_was_edited">Element wurde bearbeitet</string>
-
     <string name="silo_is_soon_empty">Ein Silo ist bald leer!</string>
     <string name="is_empty_in">ist leer in</string>
-    <string name="days">Tagen</string>
+    <string name="days">Tage</string>
     <string name="day">Tag</string>
-
 </resources>

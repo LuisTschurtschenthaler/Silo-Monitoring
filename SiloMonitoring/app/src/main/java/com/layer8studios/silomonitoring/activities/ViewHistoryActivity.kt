@@ -7,7 +7,9 @@ import com.layer8studios.silomonitoring.adapters.ViewHistoryAdapter
 import com.layer8studios.silomonitoring.databinding.ActivityViewHistoryBinding
 import com.layer8studios.silomonitoring.dialogs.DialogCreateEntry
 import com.layer8studios.silomonitoring.models.Silo
+import com.layer8studios.silomonitoring.receivers.NotificationReceiver
 import com.layer8studios.silomonitoring.utils.ARG_SILO
+import com.layer8studios.silomonitoring.utils.Utils
 
 
 class ViewHistoryActivity
@@ -43,8 +45,10 @@ class ViewHistoryActivity
 
     override fun onDialogClosed(silo: Silo) {
         adapter.setSilo(silo)
-        // TODO(RESCHEDULE NOTIFICATION)
-        // TODO(CHECK SILOS)
+        NotificationReceiver.cancelNotification(applicationContext, silo)
+        NotificationReceiver.scheduleNotification(applicationContext, silo)
+        Utils.checkSilos()
+        // TODO(REMOVE ITEMS FROM HISTORY THAT ARE IN DELETE HISTORY)
     }
 
 }

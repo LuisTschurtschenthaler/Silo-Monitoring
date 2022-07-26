@@ -32,8 +32,7 @@ class NotificationReceiver
         fun scheduleNotification(context: Context, silo: Silo) {
             val contentLeft = Utils.getContentLeft(silo)
             val daysLeft = ceil(contentLeft / silo.needPerDay).toLong()
-            val refillDate = LocalDate.now().plusDays(daysLeft)
-            // TODO(INCLUDE DAYS BEFORE)
+            val refillDate = LocalDate.now().plusDays(daysLeft).minusDays(silo.daysBeforeNotification)
 
             schedule(context, refillDate.toDate(), silo)
             println("Scheduled for ${refillDate.toDate()} (${silo.notificationID})")
@@ -55,8 +54,7 @@ class NotificationReceiver
             Preferences.getSilos().forEach { silo ->
                 val contentLeft = Utils.getContentLeft(silo)
                 val daysLeft = ceil(contentLeft / silo.needPerDay).toLong()
-                val refillDate = LocalDate.now().plusDays(daysLeft)
-                // TODO(INCLUDE DAYS BEFORE)
+                val refillDate = LocalDate.now().plusDays(daysLeft).minusDays(silo.daysBeforeNotification)
 
                 schedule(context, refillDate.toDate(), silo)
                 println("Scheduled for ${refillDate.toDate()} (${silo.notificationID})")

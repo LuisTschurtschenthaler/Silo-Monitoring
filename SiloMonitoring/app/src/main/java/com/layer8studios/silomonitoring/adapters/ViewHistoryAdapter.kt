@@ -11,6 +11,7 @@ import com.layer8studios.silomonitoring.R
 import com.layer8studios.silomonitoring.databinding.ListItemViewHistoryBinding
 import com.layer8studios.silomonitoring.dialogs.DialogCreateEntry
 import com.layer8studios.silomonitoring.models.Silo
+import com.layer8studios.silomonitoring.receivers.NotificationReceiver
 import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.Utils
 import com.layer8studios.silomonitoring.utils.Utils.toLocalDate
@@ -87,7 +88,8 @@ class ViewHistoryAdapter(
 
     override fun onDialogClosed(silo: Silo) {
         setSilo(silo)
-        // TODO(RESCHEDULE NOTIFICATION)
+        NotificationReceiver.cancelNotification(context.applicationContext, silo)
+        NotificationReceiver.scheduleNotification(context.applicationContext, silo)
     }
 
 

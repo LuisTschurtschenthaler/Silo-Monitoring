@@ -134,6 +134,7 @@ class CreateSiloActivity
                             this.capacity = capacity
                             this.content = content
                             this.needPerDay = needPerDay
+                            this.daysBeforeNotification = daysBeforeNotification
                         }
 
                         if(newSilo.needPerDay != silo!!.needPerDay) {
