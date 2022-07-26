@@ -86,7 +86,6 @@ class NotificationReceiver
             }
             val pendingIntent = PendingIntent.getBroadcast(context, silo.notificationID, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
-            /* TODO(APPLY AFTER TESTS)
             val future = Calendar.getInstance().apply {
                 set(Calendar.MONTH, date.month)
                 set(Calendar.YEAR, date.year)
@@ -94,12 +93,12 @@ class NotificationReceiver
                 set(Calendar.HOUR_OF_DAY, 6)
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
-            }*/
+            }
 
-            // TODO(REMOVE AFTER TESTS)
+            /*
             val future = Calendar.getInstance().apply {
                 add(Calendar.SECOND, 15)
-            }
+            } */
 
             if(Build.VERSION.SDK_INT >= 23)
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent)
@@ -109,13 +108,20 @@ class NotificationReceiver
         }
 
         private fun cancel(context: Context, silo: Silo) {
-            val alarmManager = (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
-            val intent = Intent(context, NotificationReceiver::class.java).apply {
-                putExtra(ARG_SILO, silo)
-            }
-            val pendingIntent = PendingIntent.getBroadcast(context, silo.notificationID, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            try {
+                val alarmManager = (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
+                val intent = Intent(context, NotificationReceiver::class.java).apply {
+                    putExtra(ARG_SILO, silo)
+                }
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    silo.notificationID,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                )
 
-            alarmManager.cancel(pendingIntent)
+                alarmManager.cancel(pendingIntent)
+            } catch(ex: Exception) { }
         }
     }
 

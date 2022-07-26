@@ -12,7 +12,6 @@ data class SiloHistoryEntry(
 ) : Parcelable
 
 
-// TODO(ADD DELETE LIST)
 @Parcelize
 data class Silo(
     var name: String,

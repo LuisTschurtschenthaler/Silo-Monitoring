@@ -47,7 +47,6 @@ class ViewHistoryActivity
         adapter.setSilo(silo)
         NotificationReceiver.reschedule(applicationContext, silo)
         Utils.checkSilos()
-        // TODO(REMOVE ITEMS FROM HISTORY THAT ARE IN DELETE HISTORY)
     }
 
 }

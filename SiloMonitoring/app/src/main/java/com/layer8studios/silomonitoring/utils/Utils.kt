@@ -18,7 +18,7 @@ object Utils {
         var contentLeft = 0.0
 
         silo.emptyingHistory.forEach { entry ->
-            if(entry.wasAdded)
+            if (entry.wasAdded)
                 contentLeft += entry.amount
             else contentLeft -= entry.amount
         }
@@ -36,12 +36,11 @@ object Utils {
 
             for(date in lastDate..today) {
                 if(date == today) continue
-
                 val dayEntries = silo.emptyingHistory.filter { it.date == date.toDate() }
+
                 if(dayEntries.find { !it.wasAdded } == null) {
-                    silo.emptyingHistory.add(
-                        SiloHistoryEntry(date.toDate(), silo.needPerDay)
-                    )
+                    val entry = SiloHistoryEntry(date.toDate(), silo.needPerDay)
+                    silo.emptyingHistory.add(entry)
                 }
             }
 
