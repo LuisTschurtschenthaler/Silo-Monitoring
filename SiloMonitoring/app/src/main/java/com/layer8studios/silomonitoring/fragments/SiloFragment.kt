@@ -2,7 +2,6 @@ package com.layer8studios.silomonitoring.fragments
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,10 +16,7 @@ import com.layer8studios.silomonitoring.activities.MainActivity
 import com.layer8studios.silomonitoring.activities.ViewHistoryActivity
 import com.layer8studios.silomonitoring.databinding.FragmentSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
-import com.layer8studios.silomonitoring.utils.ARG_SILO
-import com.layer8studios.silomonitoring.utils.Preferences
-import com.layer8studios.silomonitoring.utils.Utils
-import com.layer8studios.silomonitoring.utils.dateFormatter
+import com.layer8studios.silomonitoring.utils.*
 import java.time.LocalDate
 import kotlin.math.ceil
 
@@ -144,21 +140,11 @@ class SiloFragment
         val red = ContextCompat.getColor(requireContext(), R.color.red)
 
         val color = if(progress > 50)
-            getColor(orange, green, 100 - progress)
-        else getColor(orange, red, progress)
+            ColorUtils.getInterpolatedColor(orange, green, 100 - progress)
+        else ColorUtils.getInterpolatedColor(orange, red, progress)
         binding.waveView.background = ColorDrawable(color)
     }
 
-    private fun getColor(colorStart: Int, colorEnd: Int, percent: Int): Int {
-        return Color.rgb(
-            interpolate(Color.red(colorStart), Color.red(colorEnd), percent),
-            interpolate(Color.green(colorStart), Color.green(colorEnd), percent),
-            interpolate(Color.blue(colorStart), Color.blue(colorEnd), percent)
-        )
-    }
 
-    private fun interpolate(colorStart: Int, colorEnd: Int, percent: Int): Int {
-        return (Math.min(colorStart, colorEnd) * (100 - percent) + Math.max(colorStart, colorEnd) * percent) / 100
-    }
 
 }
