@@ -9,8 +9,10 @@ class BootCompletedReceiver
     : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        if(Intent.ACTION_BOOT_COMPLETED == intent.action)
+        if(Intent.ACTION_BOOT_COMPLETED == intent.action) {
+            NotificationReceiver.cancelNotifications(context)
             NotificationReceiver.scheduleNotifications(context)
+        }
     }
 
 }

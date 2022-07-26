@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.layer8studios.silomonitoring.R
@@ -34,12 +35,12 @@ class NotificationReceiver
             val refillDate = LocalDate.now().plusDays(daysLeft)
             // TODO(INCLUDE DAYS BEFORE)
 
-            schedule(context, refillDate.toDate(), silo.notificationID)
+            schedule(context, refillDate.toDate(), silo)
             println("Scheduled for ${refillDate.toDate()} (${silo.notificationID})")
         }
 
         fun cancelNotification(context: Context, silo: Silo) {
-            cancel(context, silo.notificationID)
+            cancel(context, silo)
             println("Canceled (${silo.notificationID})")
         }
 
@@ -57,7 +58,7 @@ class NotificationReceiver
                 val refillDate = LocalDate.now().plusDays(daysLeft)
                 // TODO(INCLUDE DAYS BEFORE)
 
-                schedule(context, refillDate.toDate(), silo.notificationID)
+                schedule(context, refillDate.toDate(), silo)
                 println("Scheduled for ${refillDate.toDate()} (${silo.notificationID})")
             }
             areNotificationsScheduled = true
@@ -68,18 +69,21 @@ class NotificationReceiver
                 Preferences.init(context)
 
             Preferences.getSilos().forEach { silo ->
-                cancel(context, silo.notificationID)
+                cancel(context, silo)
                 println("Canceled (${silo.notificationID})")
             }
             areNotificationsScheduled = false
         }
 
 
-        private fun schedule(context: Context, date: Date, notificationID: Int) {
+        private fun schedule(context: Context, date: Date, silo: Silo) {
             val alarmManager = (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
-            val intent = Intent(context, NotificationReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, notificationID, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            val intent = Intent(context, NotificationReceiver::class.java).apply {
+                putExtra(ARG_SILO, silo)
+            }
+            val pendingIntent = PendingIntent.getBroadcast(context, silo.notificationID, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
+            /* TODO(APPLY AFTER TESTS)
             val future = Calendar.getInstance().apply {
                 set(Calendar.MONTH, date.month)
                 set(Calendar.YEAR, date.year)
@@ -87,14 +91,26 @@ class NotificationReceiver
                 set(Calendar.HOUR_OF_DAY, 6)
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
+            }*/
+
+            // TODO(REMOVE AFTER TESTS)
+            val future = Calendar.getInstance().apply {
+                add(Calendar.SECOND, 15)
             }
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent)
+
+            if(Build.VERSION.SDK_INT >= 23)
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent)
+            else if(Build.VERSION.SDK_INT >= 19)
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent)
+            else alarmManager.set(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent)
         }
 
-        private fun cancel(context: Context, notificationID: Int) {
+        private fun cancel(context: Context, silo: Silo) {
             val alarmManager = (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
-            val intent = Intent(context, NotificationReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, notificationID, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            val intent = Intent(context, NotificationReceiver::class.java).apply {
+                putExtra(ARG_SILO, silo)
+            }
+            val pendingIntent = PendingIntent.getBroadcast(context, silo.notificationID, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
             alarmManager.cancel(pendingIntent)
         }
@@ -116,7 +132,7 @@ class NotificationReceiver
         }
 
         val silo = intent.getParcelableExtra<Silo>(ARG_SILO)
-        sendNotification(context, silo!!.notificationID)
+        sendNotification(context, silo!!)
     }
 
     private fun createChannels(context: Context) {
@@ -129,11 +145,17 @@ class NotificationReceiver
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun sendNotification(context: Context, notificationID: Int) {
-        val title = "TITLE"
-        val text = "TEXT"
+    private fun sendNotification(context: Context, silo: Silo) {
+        val contentLeft = Utils.getContentLeft(silo)
+        val daysLeft = ceil(contentLeft / silo.needPerDay).toLong()
+        val dayString = context.getString(if(daysLeft.toInt() == 1) R.string.day else R.string.days)
 
-        val intent = Intent(context, MainActivity::class.java)
+        val title = context.getString(R.string.silo_is_soon_empty)
+        val text = "${silo.name} ${context.getString(R.string.is_empty_in)} $daysLeft $dayString"
+
+        val intent = Intent(context, MainActivity::class.java).apply {
+            // TODO(OPEN THE RIGHT SILO)
+        }
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
         val builder = NotificationCompat.Builder(context, channelID).apply {
@@ -151,10 +173,11 @@ class NotificationReceiver
             setContentTitle(title)
             setGroup(messageGroup)
             setGroupSummary(true)
+            setAutoCancel(true)
         }
 
         with(NotificationManagerCompat.from(context)) {
-            notify(notificationID, builder.build())
+            notify(silo.notificationID, builder.build())
             notify(0, summary.build())
         }
     }

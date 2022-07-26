@@ -27,6 +27,7 @@ class MainActivity
             Preferences.init(this)
 
         Utils.checkSilos()
+        NotificationReceiver.cancelNotifications(applicationContext)
         NotificationReceiver.scheduleNotifications(applicationContext)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
