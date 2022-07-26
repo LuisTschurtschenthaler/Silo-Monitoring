@@ -85,7 +85,10 @@ class ViewHistoryAdapter(
 
     override fun getItemCount(): Int = history.size
 
-    override fun onDialogClosed(silo: Silo) = setSilo(silo)
+    override fun onDialogClosed(silo: Silo) {
+        setSilo(silo)
+        // TODO(RESCHEDULE NOTIFICATION)
+    }
 
 
     fun setSilo(silo: Silo) {

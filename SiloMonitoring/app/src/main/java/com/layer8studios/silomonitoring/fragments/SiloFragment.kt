@@ -113,20 +113,21 @@ class SiloFragment
         if(silo == null)
             return
 
-        binding.toolbar.title = "${silo?.name} (${silo?.content})"
+        binding.toolbar.title = "${silo!!.name} (${silo!!.content})"
 
         val contentLeft = Utils.getContentLeft(silo!!)
-        fillLevelPercent = (contentLeft / silo?.capacity!!) * 100
+        fillLevelPercent = (contentLeft / silo!!.capacity) * 100
 
-        val daysLeft = ceil(contentLeft / silo?.needPerDay!!).toLong()
+        val daysLeft = ceil(contentLeft / silo!!.needPerDay).toLong()
         val refillDate = LocalDate.now().plusDays(daysLeft)
 
         binding.textViewFillLevelKg.text = if(contentLeft > 0.0)
                 "${Utils.formatText(contentLeft)} kg (${Utils.formatText(fillLevelPercent)}%) ${getString(R.string.left)}"
             else getString(R.string.empty)
-        binding.textViewCapacity.text = "${Utils.formatText(silo?.capacity!!)} kg"
+        binding.textViewCapacity.text = "${Utils.formatText(silo!!.capacity)} kg"
+        binding.textViewNeedPerDay.text = "${Utils.formatText(silo!!.needPerDay)} kg"
         binding.textViewDate.text = dateFormatter.format(refillDate)
-        binding.textViewNeedPerDay.text = "${Utils.formatText(silo?.needPerDay!!)} kg"
+        binding.textViewNotificationOn.text = dateFormatter.format(refillDate.minusDays(silo!!.daysBeforeNotification))
 
         var progress = fillLevelPercent.toInt()
         if(progress >= 95)

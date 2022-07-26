@@ -7,12 +7,14 @@
     <string name="text_delete">Löschen</string>
     <string name="text_fill_level">Füllstand:</string>
     <string name="text_capacity">Kapazität:</string>
-    <string name="text_silo_empty_on">Silo ist leer am:</string>
     <string name="text_need_per_day">Täglicher Bedarf:</string>
+    <string name="text_silo_empty_on">Silo ist leer am:</string>
+    <string name="text_silo_notification_on">Benachrichtigung am:</string>
     <string name="silo_name">Silo Name (z.B. Silo 1)</string>
     <string name="silo_capacity">Silo Kapazität (z.B. 15.000 kg)</string>
     <string name="silo_content">Silo Inhalt (z.B. Futter)</string>
     <string name="need_per_day">Täglicher Bedarf (z.B. 15 kg)</string>
+    <string name="be_notified_earlier">Früher benachrichtigt werden (z.B. 2 Tage)</string>
     <string name="last_delivery_quantity">Letzte Liefermenge (z.B. 15.000 kg)</string>
     <string name="last_delivery_date">Letzes Lieferdatum:</string>
     <string name="last_delivery_date_example">17.07.2022</string>

@@ -43,6 +43,8 @@ class ViewHistoryActivity
 
     override fun onDialogClosed(silo: Silo) {
         adapter.setSilo(silo)
+        // TODO(RESCHEDULE NOTIFICATION)
+        // TODO(CHECK SILOS)
     }
 
 }

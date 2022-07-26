@@ -48,6 +48,7 @@ class CreateSiloActivity
             binding.textEditSiloCapacity.setText(silo!!.capacity.toString())
             binding.textEditSiloContent.setText(silo!!.content)
             binding.textEditNeedPerDay.setText(silo!!.needPerDay.toString())
+            binding.textEditBeNotifiedEarlier.setText(silo!!.daysBeforeNotification.toString())
 
             binding.textViewSiloLastRefill.visibility = View.GONE
             binding.textEditLastDeliveryQuantity.visibility = View.GONE
@@ -87,6 +88,7 @@ class CreateSiloActivity
             isEmpty(binding.textEditSiloCapacity, binding.textInputLayoutSiloCapacity)
             isEmpty(binding.textEditSiloContent, binding.textInputLayoutSiloContent)
             isEmpty(binding.textEditNeedPerDay, binding.textInputLayoutNeedPerDay)
+            isEmpty(binding.textEditBeNotifiedEarlier, binding.textInputLayoutBeNotifiedEarlier)
             if(!isEditingMode) isEmpty(binding.textEditLastDeliveryQuantity, binding.textInputLayoutLastDeliveryQuantity)
 
             val isNull = { txtEdit: TextInputEditText, txtLayout: TextInputLayout ->
@@ -100,6 +102,7 @@ class CreateSiloActivity
 
             isNull(binding.textEditSiloCapacity, binding.textInputLayoutSiloCapacity)
             isNull(binding.textEditNeedPerDay, binding.textInputLayoutNeedPerDay)
+            isNull(binding.textEditBeNotifiedEarlier, binding.textInputLayoutBeNotifiedEarlier)
             if(!isEditingMode) isNull(binding.textEditLastDeliveryQuantity, binding.textInputLayoutLastDeliveryQuantity)
             if(isError) return@setOnClickListener
 
@@ -108,6 +111,7 @@ class CreateSiloActivity
                 val capacity = binding.textEditSiloCapacity.text.toString().toDouble()
                 val content = binding.textEditSiloContent.text.toString()
                 val needPerDay = binding.textEditNeedPerDay.text.toString().toDouble()
+                val daysBeforeNotification = binding.textEditBeNotifiedEarlier.text.toString().toLong()
                 val lastRefillQuantity = if(isEditingMode) 0.0 else binding.textEditLastDeliveryQuantity.text.toString().toDouble()
                 val lastRefillDate = if(isEditingMode) LocalDate.now() else LocalDate.parse(binding.textViewSiloLastDeliveryDate.text, dateFormatter)
 
@@ -140,6 +144,11 @@ class CreateSiloActivity
                             )
                         }
 
+                        if(newSilo.daysBeforeNotification != silo!!.daysBeforeNotification) {
+                            NotificationReceiver.cancelNotification(applicationContext, silo!!)
+                            NotificationReceiver.scheduleNotification(applicationContext, newSilo)
+                        }
+
                         Preferences.replaceSilo(silo!!, newSilo)
                         val intent = Intent().apply {
                             putExtra(ARG_SILO, newSilo)
@@ -148,7 +157,7 @@ class CreateSiloActivity
                     }
                     else {
                         val lastRefill = SiloHistoryEntry(lastRefillDate.toDate(), lastRefillQuantity, true)
-                        val newSilo = Silo(name, capacity, content, needPerDay, mutableListOf(lastRefill))
+                        val newSilo = Silo(name, capacity, content, needPerDay, daysBeforeNotification, mutableListOf(lastRefill))
 
                         for(epochDay in lastRefillDate.toEpochDay()..today.toEpochDay()) {
                             val date = LocalDate.ofEpochDay(epochDay)
@@ -158,6 +167,8 @@ class CreateSiloActivity
                                 )
                             }
                         }
+
+                        NotificationReceiver.scheduleNotification(applicationContext, newSilo)
 
                         Preferences.addSilo(newSilo)
                         NotificationReceiver.scheduleNotification(this, newSilo)
