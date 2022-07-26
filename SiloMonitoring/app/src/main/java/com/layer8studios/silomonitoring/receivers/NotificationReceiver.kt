@@ -43,6 +43,11 @@ class NotificationReceiver
             println("Canceled (${silo.notificationID})")
         }
 
+        fun reschedule(context: Context, silo: Silo) {
+            cancelNotification(context, silo)
+            scheduleNotification(context, silo)
+        }
+
 
         fun scheduleNotifications(context: Context) {
             if(areNotificationsScheduled)

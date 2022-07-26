@@ -145,10 +145,8 @@ class CreateSiloActivity
                             )
                         }
 
-                        if(newSilo.daysBeforeNotification != silo!!.daysBeforeNotification) {
-                            NotificationReceiver.cancelNotification(applicationContext, silo!!)
-                            NotificationReceiver.scheduleNotification(applicationContext, newSilo)
-                        }
+                        if(newSilo.daysBeforeNotification != silo!!.daysBeforeNotification)
+                            NotificationReceiver.reschedule(applicationContext, newSilo)
 
                         Preferences.replaceSilo(silo!!, newSilo)
                         val intent = Intent().apply {

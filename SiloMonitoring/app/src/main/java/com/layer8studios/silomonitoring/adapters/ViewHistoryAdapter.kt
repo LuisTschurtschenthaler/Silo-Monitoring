@@ -88,8 +88,7 @@ class ViewHistoryAdapter(
 
     override fun onDialogClosed(silo: Silo) {
         setSilo(silo)
-        NotificationReceiver.cancelNotification(context.applicationContext, silo)
-        NotificationReceiver.scheduleNotification(context.applicationContext, silo)
+        NotificationReceiver.reschedule(context.applicationContext, silo)
     }
 
 

@@ -45,8 +45,7 @@ class ViewHistoryActivity
 
     override fun onDialogClosed(silo: Silo) {
         adapter.setSilo(silo)
-        NotificationReceiver.cancelNotification(applicationContext, silo)
-        NotificationReceiver.scheduleNotification(applicationContext, silo)
+        NotificationReceiver.reschedule(applicationContext, silo)
         Utils.checkSilos()
         // TODO(REMOVE ITEMS FROM HISTORY THAT ARE IN DELETE HISTORY)
     }
