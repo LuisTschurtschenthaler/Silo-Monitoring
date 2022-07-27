@@ -83,7 +83,7 @@ class MainActivity
 
     private fun loadInterstitial() {
         val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712", adRequest, object: InterstitialAdLoadCallback() {
+        InterstitialAd.load(this, "ca-app-pub-6111292602356970/7702380870", adRequest, object: InterstitialAdLoadCallback() {
             override fun onAdLoaded(ad: InterstitialAd) {
                 if(Random.nextInt(0, 100) % 5 == 0)
                     ad.show(this@MainActivity)
