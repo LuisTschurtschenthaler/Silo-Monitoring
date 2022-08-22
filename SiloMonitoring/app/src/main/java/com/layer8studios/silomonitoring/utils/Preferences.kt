@@ -75,4 +75,10 @@ object Preferences {
         preferences.edit().putString(SILOS, json).apply()
     }
 
+    private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
+        val editor = edit()
+        operation(editor)
+        editor.apply()
+    }
+
 }

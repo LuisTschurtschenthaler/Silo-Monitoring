@@ -55,18 +55,27 @@ class SiloFragment
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSiloBinding.inflate(inflater, container, false)
-
-        val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.inflateMenu(R.menu.silo_menu)
+
+        val isProVersion = MainActivity.billingHelper!!.isProVersion()
+
+        if(!isProVersion) {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+        }
+
+        binding.toolbar.inflateMenu(if(isProVersion) R.menu.silo_menu else R.menu.silo_menu_free_version)
         binding.toolbar.setOnMenuItemClickListener { item ->
             when(item.itemId) {
+                R.id.action_remove_ads -> {
+                    MainActivity.billingHelper?.purchaseProVersion(requireActivity())
+                    println("PURCHASING PRO VERSION")
+                }
+
                 R.id.action_view_history -> {
                     val intent = Intent(requireContext(), ViewHistoryActivity::class.java).apply {
                         putExtra(ARG_SILO, silo)

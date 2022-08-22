@@ -17,16 +17,15 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/black_secondary"
             app:title="@string/create_silo"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:menu="@menu/silo_history" />
+            app:navigationIcon="@drawable/ic_arrow_back" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/app_bar_layout"
         android:layout_above="@id/button_create"
+        android:layout_below="@id/app_bar_layout"
         android:scrollbarSize="6dp"
         android:scrollbars="vertical">
 
@@ -187,8 +186,8 @@
                 android:id="@+id/linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_below="@id/text_view_silo_last_refill"
+                android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 

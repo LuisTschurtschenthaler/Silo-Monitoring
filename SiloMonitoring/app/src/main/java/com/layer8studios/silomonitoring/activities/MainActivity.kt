@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.TransactionDetails
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
@@ -14,13 +16,17 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.layer8studios.silomonitoring.adapters.ViewPagerAdapter
 import com.layer8studios.silomonitoring.databinding.ActivityMainBinding
 import com.layer8studios.silomonitoring.models.Silo
-import com.layer8studios.silomonitoring.utils.Preferences
-import com.layer8studios.silomonitoring.utils.Utils
+import com.layer8studios.silomonitoring.utils.*
+import kotlinx.coroutines.CoroutineScope
 import kotlin.random.Random
 
 
 class MainActivity
     : AppCompatActivity() {
+
+    companion object {
+        var billingHelper: BillingHelper? = null
+    }
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: ViewPagerAdapter
@@ -37,6 +43,7 @@ class MainActivity
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        billingHelper = BillingHelper(applicationContext)
         MobileAds.initialize(this)
 
         adapter = ViewPagerAdapter(this)
@@ -52,7 +59,7 @@ class MainActivity
 
     override fun onResume() {
         super.onResume()
-        loadInterstitial()
+        //loadInterstitial() //TODO(MAKE BETTER)
 
         adapter.update()
         binding.viewPager.adapter = adapter

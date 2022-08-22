@@ -5,4 +5,7 @@ import java.time.format.DateTimeFormatter
 
 const val ARG_SILO = "ARG_SILO"
 
+const val LICENSE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAon7BjexRkmlUJw399jWiWQPQ8qPVN6hdg0dVnqOma+IT+da7+VIq16efItOrZ3eRtxEF/YEUDsKb179k4M3B58dWXsu4IC2FTkabvoHWq7uw8Y1iEFQalJ7ceB9Ydo5ZPZ3RBX8U2XHTC6dEoch2/Str0VnMhHZ1qb1zOSiG0mPn7GxZ4GbTZM925WoYhaKoUfhCRP0EyLqYtlIEK4sgn3AT0f+Mn5Hk3k+KwShCTT2MSfTUdU/l+EnmcDsfXpX0//xtHnnHRGhaBu3rKCMscgtGKPkA1TtNNDJFBKArmmTyTUuRTg8oJvoBP3Q6YICxOGIPMb3SLJNNisWVwbfbcQIDAQAB"
+const val PRODUCT_ID = "pro_version"
+
 val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
