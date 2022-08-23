@@ -36,11 +36,10 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:padding="12dp"
-            android:text="10000 kg (100%) übrig"
+            android:text="xxxx kg übrig"
             android:textColor="@color/white"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
@@ -55,8 +54,7 @@
         app:layout_constraintBottom_toTopOf="@id/ad_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view_edit"
-        android:baselineAligned="false">
+        app:layout_constraintTop_toBottomOf="@id/card_view_edit">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -85,9 +83,45 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:text="@string/text_fill_level"
+                            android:textColor="@color/white"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp" />
+
+                        <TextView
+                            android:id="@+id/text_view_fill_level_percent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:alpha="0.64"
+                            android:text="xxx,xx %"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/text_capacity"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp" />
 
                         <TextView
                             android:id="@+id/text_view_capacity"
@@ -95,10 +129,13 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:alpha="0.64"
-                            android:text="1000 kg"
+                            android:text="xxxx kg"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp" />
 
                     </LinearLayout>
 
@@ -114,7 +151,10 @@
                             android:gravity="center"
                             android:text="@string/text_need_per_day"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp"
+                            app:autoSizeTextType="uniform" />
 
                         <TextView
                             android:id="@+id/text_view_need_per_day"
@@ -122,10 +162,13 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:alpha="0.64"
-                            android:text="12 kg"
+                            android:text="xx kg"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp" />
 
                     </LinearLayout>
 
@@ -141,7 +184,10 @@
                             android:gravity="center"
                             android:text="@string/text_silo_empty_on"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp" />
 
                         <TextView
                             android:id="@+id/text_view_date"
@@ -149,10 +195,13 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:alpha="0.64"
-                            android:text="1.07.2022"
+                            android:text="xx.xx.xxxx"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp" />
 
                     </LinearLayout>
 
@@ -168,7 +217,10 @@
                             android:gravity="center"
                             android:text="@string/text_silo_notification_on"
                             android:textColor="@color/white"
-                            android:textSize="20sp" />
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp" />
 
                         <TextView
                             android:id="@+id/text_view_notification_on"
@@ -176,10 +228,13 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:alpha="0.64"
-                            android:text="10.07.2022"
+                            android:text="xx.xx.xxxx"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            app:autoSizeTextType="uniform"
+                            app:autoSizeMinTextSize="14sp"
+                            app:autoSizeMaxTextSize="22sp"
+                            app:autoSizeStepGranularity="1sp" />
 
                     </LinearLayout>
 
@@ -192,7 +247,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3">
+            android:layout_weight="2.5">
 
             <com.john.waveview.WaveView
                 android:id="@+id/wave_view"

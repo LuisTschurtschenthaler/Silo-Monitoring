@@ -135,9 +135,8 @@ class SiloFragment
         val daysLeft = ceil(contentLeft / silo!!.needPerDay).toLong()
         val refillDate = LocalDate.now().plusDays(daysLeft)
 
-        binding.textViewFillLevelKg.text = if(contentLeft > 0.0)
-                "${Utils.formatText(contentLeft)} kg (${Utils.formatText(fillLevelPercent)}%) ${getString(R.string.left)}"
-            else getString(R.string.empty)
+        binding.textViewFillLevelPercent.text = "${Utils.formatText(fillLevelPercent)} %"
+        binding.textViewFillLevelKg.text = if(contentLeft > 0.0) "${Utils.formatText(contentLeft)} kg ${getString(R.string.left)}" else getString(R.string.empty)
         binding.textViewCapacity.text = "${Utils.formatText(silo!!.capacity)} kg"
         binding.textViewNeedPerDay.text = "${Utils.formatText(silo!!.needPerDay)} kg"
         binding.textViewDate.text = dateFormatter.format(refillDate)

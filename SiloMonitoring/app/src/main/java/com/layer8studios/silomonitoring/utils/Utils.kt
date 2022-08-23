@@ -18,7 +18,7 @@ object Utils {
         var contentLeft = 0.0
 
         silo.emptyingHistory.forEach { entry ->
-            if (entry.wasAdded)
+            if(entry.wasAdded)
                 contentLeft += entry.amount
             else contentLeft -= entry.amount
         }
