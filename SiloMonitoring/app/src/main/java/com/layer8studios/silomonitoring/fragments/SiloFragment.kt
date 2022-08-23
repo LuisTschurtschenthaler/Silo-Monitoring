@@ -61,7 +61,7 @@ class SiloFragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isProVersion = MainActivity.billingHelper!!.isProVersion()
+        val isProVersion = (MainActivity.billingHelper!!.isProVersion() || MainActivity.boughtPro)
 
         if(!isProVersion) {
             val adRequest = AdRequest.Builder().build()

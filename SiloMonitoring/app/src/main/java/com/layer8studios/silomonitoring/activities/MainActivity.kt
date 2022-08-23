@@ -26,6 +26,7 @@ class MainActivity
 
     companion object {
         var billingHelper: BillingHelper? = null
+        var boughtPro = false
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -43,7 +44,7 @@ class MainActivity
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        billingHelper = BillingHelper(applicationContext)
+        billingHelper = BillingHelper(this, applicationContext)
         MobileAds.initialize(this)
 
         adapter = ViewPagerAdapter(this)

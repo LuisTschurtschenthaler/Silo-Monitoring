@@ -4,9 +4,11 @@ import android.app.Activity
 import android.content.Context
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
+import com.layer8studios.silomonitoring.activities.MainActivity
 
 
 class BillingHelper internal constructor(
+    private val mainActivity: MainActivity,
     private val context: Context
 ) : BillingProcessor.IBillingHandler {
 
@@ -17,20 +19,17 @@ class BillingHelper internal constructor(
     }
 
 
-    override fun onProductPurchased(productId: String, details: TransactionDetails?) { }
+    override fun onProductPurchased(productId: String, details: TransactionDetails?) {
+        MainActivity.boughtPro = true
+        mainActivity.recreate()
+    }
 
     override fun onPurchaseHistoryRestored() { }
 
-    override fun onBillingError(errorCode: Int, error: Throwable?) {
-        println(error?.message)
-    }
+    override fun onBillingError(errorCode: Int, error: Throwable?) { }
 
     override fun onBillingInitialized() {
         billingProcessor.loadOwnedPurchasesFromGoogle()
-
-        if(billingProcessor.isPurchased(PRODUCT_ID))
-            println("DU BISCH A PREMIUM JO FALZ MIR")
-        else println("KOAN PREMIUM HAHHHAHAHHA")
     }
 
     fun reset() = billingProcessor.consumePurchase(PRODUCT_ID)
@@ -38,9 +37,7 @@ class BillingHelper internal constructor(
     fun isProVersion() = billingProcessor.isPurchased(PRODUCT_ID)
 
     fun purchaseProVersion(activity: Activity) {
-        val isOneTimePurchaseSupported = billingProcessor.isOneTimePurchaseSupported
-
-        if(isOneTimePurchaseSupported)
+        if(billingProcessor.isOneTimePurchaseSupported)
             billingProcessor.purchase(activity, PRODUCT_ID)
     }
 
