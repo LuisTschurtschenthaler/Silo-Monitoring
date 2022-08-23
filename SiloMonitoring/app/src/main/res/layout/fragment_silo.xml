@@ -37,7 +37,7 @@
             android:gravity="center"
             android:layout_marginTop="16dp"
             android:padding="12dp"
-            android:text="xxxx kg übrig"
+            android:text="xxxx kg left"
             android:textColor="@color/white"
             android:textSize="26sp"
             android:textStyle="bold" />
