@@ -7,6 +7,7 @@
     <string name="text_edit">Bearbeiten</string>
     <string name="text_delete">Löschen</string>
     <string name="text_fill_level">Füllstand:</string>
+    <string name="text_content">Inhalt:</string>
     <string name="text_capacity">Kapazität:</string>
     <string name="text_need_per_day">Täglicher Bedarf:</string>
     <string name="text_silo_empty_on">Silo ist leer am:</string>

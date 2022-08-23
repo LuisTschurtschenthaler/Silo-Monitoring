@@ -25,6 +25,7 @@
         <item name="android:textSelectHandleLeft">@drawable/cursor</item>
         <item name="android:textSelectHandleRight">@drawable/cursor</item>
         <item name="colorPrimary">@color/white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="SiloMonitoring.DatePickerDialogTheme" parent="Theme.AppCompat.DayNight.Dialog">

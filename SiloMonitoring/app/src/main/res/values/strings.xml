@@ -7,6 +7,7 @@
     <string name="text_edit">Edit</string>
     <string name="text_delete">Delete</string>
     <string name="text_fill_level">Fill level:</string>
+    <string name="text_content">Content:</string>
     <string name="text_capacity">Capacity:</string>
     <string name="text_need_per_day">Need per day:</string>
     <string name="text_silo_empty_on">Silo is empty on:</string>
