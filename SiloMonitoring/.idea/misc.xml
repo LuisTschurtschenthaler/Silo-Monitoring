@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.359" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/button_style.xml" value="0.213" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/cursor.xml" value="0.3125" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/ic_arrow_back.xml" value="0.2425" />
@@ -10,6 +11,7 @@
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/ic_arrow_return_left.xml" value="0.283" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/ic_delete_24dp.xml" value="0.213" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/ic_delete_gray.xml" value="0.28" />
+        <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/ic_launcher_background.xml" value="0.359" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/ic_list_ul.xml" value="0.3715" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/ic_pencil_fill.xml" value="0.3715" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/drawable/ic_pencil_fill_24dp.xml" value="0.213" />
@@ -30,6 +32,7 @@
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/menu/silo_menu.xml" value="0.5" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/menu/silo_menu_free_version.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3125" />
+        <entry key="..\:/Users/luis/Desktop/GitHub/Silo-Monitoring/SiloMonitoring/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.359" />
         <entry key="..\:/Users/luis/Desktop/SiloMonitoring/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/luis/Desktop/SiloMonitoring/app/src/main/res/layout/content_main.xml" value="0.5541666666666667" />
         <entry key="..\:/Users/luis/Desktop/SiloMonitoring/app/src/main/res/menu/menu_main.xml" value="0.5541666666666667" />
