@@ -25,27 +25,30 @@ object Utils {
         return contentLeft
     }
 
-    fun checkSilos() {
-        val silosOriginal = Preferences.getSilos()
-        val silos = Preferences.getSilos()
+    fun checkSilo(silo: Silo): Silo {
+        val newSilo = silo.copy()
 
-        var i = 0
-        silos.forEach { silo ->
-            val lastDate = silo.emptyingHistory.last().date.toLocalDate()
-            val today = LocalDate.now()
+        val lastDate = silo.emptyingHistory.last().date.toLocalDate()
+        val today = LocalDate.now()
 
-            for(date in lastDate..today) {
-                if(date == today) continue
-                val dayEntries = silo.emptyingHistory.filter { it.date == date.toDate() }
+        for(date in lastDate..today) {
+            if(date == today) continue
+            val dayEntries = newSilo.emptyingHistory.filter { it.date == date.toDate() }
 
-                if(dayEntries.find { !it.wasAdded } == null) {
-                    val entry = SiloHistoryEntry(date.toDate(), silo.needPerDay)
-                    silo.emptyingHistory.add(entry)
-                }
+            if(dayEntries.find { !it.wasAdded } == null) {
+                val entry = SiloHistoryEntry(date.toDate(), newSilo.needPerDay)
+                newSilo.emptyingHistory.add(entry)
             }
+        }
 
-            Preferences.replaceSilo(silosOriginal[i], silos[i])
-            i++
+        return newSilo
+    }
+
+    fun checkSilos() {
+        val silos = Preferences.getSilos()
+        silos.forEach { silo ->
+            val newSilo = checkSilo(silo)
+            Preferences.replaceSilo(silo, newSilo)
         }
     }
 

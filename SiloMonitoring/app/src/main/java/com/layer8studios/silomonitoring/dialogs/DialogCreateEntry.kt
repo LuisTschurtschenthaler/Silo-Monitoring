@@ -53,17 +53,15 @@ class DialogCreateEntry(
         val today = LocalDate.now()
         binding.buttonSelectDate.setOnClickListener {
             val calendar = Calendar.getInstance().apply {
-                if(isEditing)
-                    set(historyEntry!!.date.year, historyEntry.date.month, historyEntry.date.dayOfMonth)
-                else set(today.year, today.monthValue, today.dayOfMonth)
+                set(today.year, today.monthValue, today.dayOfMonth)
             }
 
-            DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
+            val selectedDate = if(isEditing) historyEntry!!.date.toLocalDate() else today
+            val datePicker = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
                 binding.textViewSelectedDate.text = dateFormatter.format(LocalDate.of(year, month, dayOfMonth))
-            }, today.year, today.monthValue, today.dayOfMonth).apply {
-                datePicker.maxDate = calendar.timeInMillis
-                show()
-            }
+            }, selectedDate.year, selectedDate.monthValue, selectedDate.dayOfMonth)
+            datePicker.datePicker.maxDate = calendar.timeInMillis
+            datePicker.show()
         }
 
         val builder = AlertDialog.Builder(context).apply {
@@ -102,15 +100,14 @@ class DialogCreateEntry(
                         val newSilo = silo.copy()
                         if(isEditing)
                             newSilo.emptyingHistory.remove(historyEntryOriginal)
-
                         newSilo.emptyingHistory.add(entry)
 
                         Preferences.replaceSilo(silo, newSilo)
                         Toast.makeText(requireContext(), if(isEditing) getString(R.string.element_was_edited)
                             else getString(R.string.element_was_added), Toast.LENGTH_SHORT).show()
-                        dismiss()
 
                         dialogCloseListener.onDialogClosed(newSilo)
+                        dismiss()
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.layer8studios.silomonitoring.adapters
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
@@ -87,11 +88,14 @@ class ViewHistoryAdapter(
     override fun getItemCount(): Int = history.size
 
     override fun onDialogClosed(silo: Silo) {
+        val newSilo = Utils.checkSilo(silo)
+        Preferences.replaceSilo(silo, newSilo)
         setSilo(silo)
         NotificationReceiver.reschedule(context.applicationContext, silo)
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setSilo(silo: Silo) {
         Utils.sortHistory(silo)
 

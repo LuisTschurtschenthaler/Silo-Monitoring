@@ -9,6 +9,7 @@ import com.layer8studios.silomonitoring.dialogs.DialogCreateEntry
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.receivers.NotificationReceiver
 import com.layer8studios.silomonitoring.utils.ARG_SILO
+import com.layer8studios.silomonitoring.utils.Preferences
 import com.layer8studios.silomonitoring.utils.Utils
 
 
@@ -44,9 +45,11 @@ class ViewHistoryActivity
     }
 
     override fun onDialogClosed(silo: Silo) {
-        adapter.setSilo(silo)
-        NotificationReceiver.reschedule(applicationContext, silo)
-        Utils.checkSilos()
+        val newSilo = Utils.checkSilo(silo)
+        Preferences.replaceSilo(silo, newSilo)
+
+        adapter.setSilo(newSilo)
+        NotificationReceiver.reschedule(applicationContext, newSilo)
     }
 
 }
