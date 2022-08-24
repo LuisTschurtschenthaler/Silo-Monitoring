@@ -53,7 +53,9 @@ class DialogCreateEntry(
         val today = LocalDate.now()
         binding.buttonSelectDate.setOnClickListener {
             val calendar = Calendar.getInstance().apply {
-                set(today.year, today.monthValue, today.dayOfMonth)
+                if(isEditing)
+                    set(historyEntry!!.date.year, historyEntry.date.month, historyEntry.date.dayOfMonth)
+                else set(today.year, today.monthValue, today.dayOfMonth)
             }
 
             DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
