@@ -58,220 +58,226 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_marginEnd="16dp">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/black_secondary"
-                android:layout_marginEnd="16dp"
                 app:cardCornerRadius="12dp">
 
-                <LinearLayout
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                    android:layout_height="match_parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/text_fill_level"
-                            android:textColor="@color/white"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
-
-                        <TextView
-                            android:id="@+id/text_view_fill_level_percent"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:alpha="0.64"
-                            android:text="xxx,xx %"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:layout_marginTop="16dp">
+                        android:padding="12dp">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/text_capacity"
-                            android:textColor="@color/white"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/text_view_capacity"
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/text_fill_level"
+                                android:textColor="@color/white"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_fill_level_percent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:alpha="0.64"
+                                android:text="xxx,xx %"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:alpha="0.64"
-                            android:text="xxxx kg"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
+                            android:orientation="vertical"
+                            android:layout_marginTop="16dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/text_capacity"
+                                android:textColor="@color/white"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_capacity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:alpha="0.64"
+                                android:text="xxxx kg"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="16dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/text_content"
+                                android:textColor="@color/white"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:alpha="0.64"
+                                android:text="xxxxx"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/text_need_per_day"
+                                android:textColor="@color/white"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp"
+                                app:autoSizeTextType="uniform" />
+
+                            <TextView
+                                android:id="@+id/text_view_need_per_day"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:alpha="0.64"
+                                android:text="xx kg"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/text_silo_empty_on"
+                                android:textColor="@color/white"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:alpha="0.64"
+                                android:text="xx.xx.xxxx"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/text_silo_notification_on"
+                                android:textColor="@color/white"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                            <TextView
+                                android:id="@+id/text_view_notification_on"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:alpha="0.64"
+                                android:text="xx.xx.xxxx"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="12sp"
+                                app:autoSizeMaxTextSize="22sp"
+                                app:autoSizeStepGranularity="1sp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/text_content"
-                            android:textColor="@color/white"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
-
-                        <TextView
-                            android:id="@+id/text_view_content"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:alpha="0.64"
-                            android:text="xxxxx"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/text_need_per_day"
-                            android:textColor="@color/white"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp"
-                            app:autoSizeTextType="uniform" />
-
-                        <TextView
-                            android:id="@+id/text_view_need_per_day"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:alpha="0.64"
-                            android:text="xx kg"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/text_silo_empty_on"
-                            android:textColor="@color/white"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
-
-                        <TextView
-                            android:id="@+id/text_view_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:alpha="0.64"
-                            android:text="xx.xx.xxxx"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/text_silo_notification_on"
-                            android:textColor="@color/white"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
-
-                        <TextView
-                            android:id="@+id/text_view_notification_on"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:alpha="0.64"
-                            android:text="xx.xx.xxxx"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            app:autoSizeTextType="uniform"
-                            app:autoSizeMinTextSize="16sp"
-                            app:autoSizeMaxTextSize="22sp"
-                            app:autoSizeStepGranularity="1sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
+                </ScrollView>
 
             </androidx.cardview.widget.CardView>
 
