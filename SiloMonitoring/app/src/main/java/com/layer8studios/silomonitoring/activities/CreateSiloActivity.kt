@@ -64,11 +64,11 @@ class CreateSiloActivity
         binding.buttonSelectDate.setOnClickListener {
             val today = LocalDate.parse(binding.textViewSiloLastDeliveryDate.text, dateFormatter)
             val calendar = Calendar.getInstance().apply {
-                set(today.year, today.monthValue, today.dayOfMonth)
+                set(today.year, today.monthValue - 1, today.dayOfMonth)
             }
 
             val datePicker = DatePickerDialog(this, { _, year, month, dayOfMonth ->
-                binding.textViewSiloLastDeliveryDate.text = dateFormatter.format(LocalDate.of(year, month, dayOfMonth))
+                binding.textViewSiloLastDeliveryDate.text = dateFormatter.format(LocalDate.of(year, month + 1, dayOfMonth))
             }, today.year, today.monthValue, today.dayOfMonth)
             datePicker.datePicker.maxDate = calendar.timeInMillis
             datePicker.show()

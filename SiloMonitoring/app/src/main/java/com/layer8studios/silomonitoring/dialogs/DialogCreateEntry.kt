@@ -58,8 +58,8 @@ class DialogCreateEntry(
 
             val selectedDate = if(isEditing) historyEntry!!.date.toLocalDate() else today
             val datePicker = DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
-                binding.textViewSelectedDate.text = dateFormatter.format(LocalDate.of(year, month, dayOfMonth))
-            }, selectedDate.year, selectedDate.monthValue, selectedDate.dayOfMonth)
+                binding.textViewSelectedDate.text = dateFormatter.format(LocalDate.of(year, month + 1, dayOfMonth))
+            }, selectedDate.year, selectedDate.monthValue - 1, selectedDate.dayOfMonth)
             datePicker.datePicker.maxDate = calendar.timeInMillis
             datePicker.show()
         }

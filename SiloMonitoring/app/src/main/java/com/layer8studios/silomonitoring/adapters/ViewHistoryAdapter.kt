@@ -58,6 +58,7 @@ class ViewHistoryAdapter(
             }
         }
 
+        @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
             val item = history[position]
             binding.textViewDetails.text = if(item.wasAdded) "+" else "-"

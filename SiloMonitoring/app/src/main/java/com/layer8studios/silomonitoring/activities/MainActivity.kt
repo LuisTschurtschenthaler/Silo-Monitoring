@@ -73,7 +73,7 @@ class MainActivity
         if(requestCode == 0 && resultCode == RESULT_OK) {
             adapter.update()
             updateLayouts()
-            binding.viewPager.currentItem = adapter.itemCount
+            binding.viewPager.currentItem = adapter.itemCount - 1
         }
     }
 

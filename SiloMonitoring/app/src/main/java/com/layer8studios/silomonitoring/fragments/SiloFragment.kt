@@ -66,6 +66,7 @@ class SiloFragment
 
         if(!isProVersion) {
             val adRequest = AdRequest.Builder().build()
+            binding.adView.visibility = View.VISIBLE
             binding.adView.loadAd(adRequest)
         }
 
@@ -135,7 +136,7 @@ class SiloFragment
         val refillDate = LocalDate.now().plusDays(daysLeft)
 
         binding.toolbar.title = silo!!.name
-        binding.textViewFillLevelPercent.text = "${if(fillLevelPercent < 0.0) getString(R.string.empty) else Utils.formatText(fillLevelPercent)} %"
+        binding.textViewFillLevelPercent.text = if(fillLevelPercent < 0.0) getString(R.string.empty) else "${Utils.formatText(fillLevelPercent)} %"
         binding.textViewContent.text = silo!!.content
         binding.textViewFillLevelKg.text = if(contentLeft > 0.0) "${Utils.formatText(contentLeft)} kg ${getString(R.string.left)}" else getString(R.string.empty)
         binding.textViewCapacity.text = "${Utils.formatText(silo!!.capacity)} kg"
