@@ -26,8 +26,8 @@ Advantages of the app:
 
 ## Screenshots
 
-[<img src="/images/screenshot-1.png" align="left" width="200" hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
-[<img src="/images/screenshot-2.png" align="left" width="200" hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
-[<img src="/images/screenshot-3.png" align="left" width="200" hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
+[<img src="/images/screenshot-1.png" align="left" width="200" hspace="10" vspace="10">](/images/screenshot-1.png)
+[<img src="/images/screenshot-2.png" align="left" width="200" hspace="10" vspace="10">](/images/screenshot-2.png)
+[<img src="/images/screenshot-3.png" align="left" width="200" hspace="10" vspace="10">](/images/screenshot-3.png)
 
 <br />
