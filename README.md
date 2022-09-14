@@ -31,9 +31,3 @@ Advantages of the app:
 [<img src="/images/screenshot-3.png" align="left" width="200" hspace="10" vspace="10">](/readme/Wallabag%20Reading%20List.png)
 
 <br />
-
-## Permissions required
-
-NONE
-
-<br />
