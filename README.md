@@ -31,3 +31,13 @@ Advantages of the app:
 [<img src="/images/screenshot-3.png" align="left" width="200" hspace="10" vspace="10">](/images/screenshot-3.png)
 
 <br />
+
+## Dependencies
+[Glide](https://github.com/bumptech/glide)
+[WaveView](https://github.com/john990/WaveView)
+[In-App Billing](https://github.com/anjlab/android-inapp-billing-v3)
+
+<br />
+
+
+
