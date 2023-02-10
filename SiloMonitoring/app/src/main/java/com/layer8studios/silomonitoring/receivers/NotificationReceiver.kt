@@ -7,7 +7,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
+import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.layer8studios.silomonitoring.R
@@ -35,12 +35,10 @@ class NotificationReceiver
             val refillDate = LocalDate.now().plusDays(daysLeft).minusDays(silo.daysBeforeNotification)
 
             schedule(context, refillDate.toDate(), silo)
-            println("Scheduled for ${refillDate.toDate()} (${silo.notificationID})")
         }
 
         fun cancelNotification(context: Context, silo: Silo) {
             cancel(context, silo)
-            println("Canceled (${silo.notificationID})")
         }
 
         fun reschedule(context: Context, silo: Silo) {
@@ -95,16 +93,13 @@ class NotificationReceiver
                 set(Calendar.SECOND, 0)
             }
 
-            /*
-            val future = Calendar.getInstance().apply {
-                add(Calendar.SECOND, 15)
-            } */
-
-            if(Build.VERSION.SDK_INT >= 23)
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent)
-            else if(Build.VERSION.SDK_INT >= 19)
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent)
-            else alarmManager.set(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent)
+            AlarmManagerCompat.setExactAndAllowWhileIdle(
+                alarmManager,
+                AlarmManager.RTC_WAKEUP,
+                future.timeInMillis,
+                pendingIntent
+            )
+            //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent, PendingIntent.FLAG_CANCEL_CURRENT)
         }
 
         private fun cancel(context: Context, silo: Silo) {

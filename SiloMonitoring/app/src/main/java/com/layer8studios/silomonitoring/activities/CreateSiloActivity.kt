@@ -12,10 +12,8 @@ import com.layer8studios.silomonitoring.databinding.ActivityCreateSiloBinding
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.models.SiloHistoryEntry
 import com.layer8studios.silomonitoring.receivers.NotificationReceiver
-import com.layer8studios.silomonitoring.utils.ARG_SILO
-import com.layer8studios.silomonitoring.utils.Preferences
+import com.layer8studios.silomonitoring.utils.*
 import com.layer8studios.silomonitoring.utils.Utils.toDate
-import com.layer8studios.silomonitoring.utils.dateFormatter
 import java.time.LocalDate
 import java.util.*
 
@@ -125,63 +123,52 @@ class CreateSiloActivity
                 if(!isEditingMode) isBigger(lastRefillQuantity, capacity, binding.textInputLayoutLastDeliveryQuantity)
                 isBigger(needPerDay, capacity, binding.textInputLayoutNeedPerDay)
 
-                if(!isError) {
-                    val today = LocalDate.now()
+                if(isError) return@setOnClickListener
 
-                    if(isEditingMode) {
-                        val newSilo = silo!!.copy().apply {
-                            this.name = name
-                            this.capacity = capacity
-                            this.content = content
-                            this.needPerDay = needPerDay
-                            this.daysBeforeNotification = daysBeforeNotification
-                        }
-
-                        if(newSilo.needPerDay != silo!!.needPerDay) {
-                            if(newSilo.emptyingHistory.last().date == today.toDate())
-                                newSilo.emptyingHistory.removeLast()
-                            newSilo.emptyingHistory.add(
-                                SiloHistoryEntry(today.toDate(), needPerDay)
-                            )
-                        }
-
-                        if(newSilo.daysBeforeNotification != silo!!.daysBeforeNotification)
-                            NotificationReceiver.reschedule(applicationContext, newSilo)
-
-                        Preferences.replaceSilo(silo!!, newSilo)
-                        val intent = Intent().apply {
-                            putExtra(ARG_SILO, newSilo)
-                        }
-                        setResult(RESULT_OK, intent)
-                    }
-                    else {
-                        val lastRefill = SiloHistoryEntry(lastRefillDate.toDate(), lastRefillQuantity, true)
-                        val newSilo = Silo(name, capacity, content, needPerDay, daysBeforeNotification, mutableListOf(lastRefill))
-
-                        for(epochDay in lastRefillDate.toEpochDay()..today.toEpochDay()) {
-                            val date = LocalDate.ofEpochDay(epochDay)
-                            if(date != lastRefillDate) {
-                                newSilo.emptyingHistory.add(
-                                    SiloHistoryEntry(date.toDate(), needPerDay)
-                                )
-                            }
-                        }
-
-                        NotificationReceiver.scheduleNotification(applicationContext, newSilo)
-
-                        Preferences.addSilo(newSilo)
-                        NotificationReceiver.scheduleNotification(this, newSilo)
-
-                        setResult(RESULT_OK)
+                val today = LocalDate.now()
+                if(isEditingMode) {
+                    val newSilo = silo!!.copy().apply {
+                        this.name = name
+                        this.capacity = capacity
+                        this.content = content
+                        this.needPerDay = needPerDay
+                        this.daysBeforeNotification = daysBeforeNotification
                     }
 
-                    finish()
+                    if(newSilo.needPerDay != silo!!.needPerDay) {
+                        val entry = newSilo.emptyingHistory.find { it.date == today.toDate() }
+                        if(entry != null) {
+                            newSilo.emptyingHistory.remove(entry)
+
+                            val newEntry = SiloHistoryEntry(today.toDate(), needPerDay)
+                            newSilo.emptyingHistory.add(newEntry)
+                        }
+                    }
+
+                    if(newSilo.daysBeforeNotification != silo!!.daysBeforeNotification)
+                        NotificationReceiver.reschedule(applicationContext, newSilo)
+
+                    Preferences.replaceSilo(silo!!, newSilo)
+                    val intent = Intent().apply {
+                        putExtra(ARG_SILO, newSilo)
+                    }
+                    setResult(RESULT_OK, intent)
                 }
+                else {
+                    val lastRefill = SiloHistoryEntry(lastRefillDate.toDate(), lastRefillQuantity, true)
+                    val newSilo = Silo(name, capacity, content, needPerDay, daysBeforeNotification, mutableListOf(lastRefill))
+
+                    Utils.createSiloHistory(newSilo, needPerDay, lastRefillDate, lastRefillDate, today)
+
+                    Preferences.addSilo(newSilo)
+                    NotificationReceiver.scheduleNotification(this, newSilo)
+                    setResult(RESULT_OK)
+                }
+
+                finish()
             } catch(ex: Exception) {
                 println(ex)
             }
         }
-
     }
-
 }

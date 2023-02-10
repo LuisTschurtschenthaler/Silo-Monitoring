@@ -52,6 +52,14 @@ object Utils {
         }
     }
 
+    fun createSiloHistory(silo: Silo, needPerDay: Double, lastRefillDate: LocalDate, from: LocalDate, to: LocalDate) {
+        for(date in from..to) {
+            val entry = SiloHistoryEntry(date.toDate(), needPerDay)
+            silo.emptyingHistory.add(entry)
+        }
+        checkSilo(silo)
+    }
+
     fun sortHistory(silo: Silo) {
         silo.emptyingHistory.sortBy { it.amount }
         silo.emptyingHistory.sortBy { it.wasAdded }

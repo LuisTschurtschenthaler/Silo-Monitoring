@@ -4,11 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.anjlab.android.iab.v3.BillingProcessor
-import com.anjlab.android.iab.v3.TransactionDetails
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -17,8 +13,6 @@ import com.layer8studios.silomonitoring.adapters.ViewPagerAdapter
 import com.layer8studios.silomonitoring.databinding.ActivityMainBinding
 import com.layer8studios.silomonitoring.models.Silo
 import com.layer8studios.silomonitoring.utils.*
-import kotlinx.coroutines.CoroutineScope
-import kotlin.random.Random
 
 
 class MainActivity
@@ -31,6 +25,7 @@ class MainActivity
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: ViewPagerAdapter
+    private var isStart = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,13 +55,18 @@ class MainActivity
 
     override fun onResume() {
         super.onResume()
-        //loadInterstitial() //TODO(MAKE BETTER)
+
+        if(isStart && billingHelper?.isProVersion() == false) {
+            loadInterstitial()
+            isStart = false
+        }
 
         adapter.update()
         binding.viewPager.adapter = adapter
         updateLayouts()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -93,8 +93,7 @@ class MainActivity
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(this, "ca-app-pub-6111292602356970/7702380870", adRequest, object: InterstitialAdLoadCallback() {
             override fun onAdLoaded(ad: InterstitialAd) {
-                if(Random.nextInt(0, 100) % 5 == 0)
-                    ad.show(this@MainActivity)
+                ad.show(this@MainActivity)
             }
         })
     }
