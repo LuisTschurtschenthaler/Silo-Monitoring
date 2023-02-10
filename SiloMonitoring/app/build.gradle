@@ -16,8 +16,8 @@ android {
         applicationId "com.layer8studios.silomonitoring"
         minSdk 28
         targetSdk 33
-        versionCode 5
-        versionName "1.4"
+        versionCode 151
+        versionName "1.5"
     }
 
     buildTypes {
@@ -53,6 +53,5 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     implementation 'com.github.john990:WaveView:v0.9'
     implementation 'com.google.android.gms:play-services-ads:21.5.0'
-    implementation 'com.anjlab.android.iab.v3:library:1.0.44'
-    implementation 'me.moallemi.tools:kotlin-date-range:1.0.0'
+    implementation 'com.anjlab.android.iab.v3:library:2.0.3'
 }
