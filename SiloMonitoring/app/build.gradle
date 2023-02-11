@@ -16,8 +16,8 @@ android {
         applicationId "com.layer8studios.silomonitoring"
         minSdk 28
         targetSdk 33
-        versionCode 151
-        versionName "1.5"
+        versionCode 160
+        versionName "1.6"
     }
 
     buildTypes {
