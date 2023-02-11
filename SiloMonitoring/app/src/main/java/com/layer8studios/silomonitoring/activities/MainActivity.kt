@@ -1,9 +1,13 @@
 package com.layer8studios.silomonitoring.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.BillingProcessor.IPurchasesResponseListener
+import com.anjlab.android.iab.v3.PurchaseInfo
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -16,15 +20,15 @@ import com.layer8studios.silomonitoring.utils.*
 
 
 class MainActivity
-    : AppCompatActivity() {
+    : AppCompatActivity(), BillingProcessor.IBillingHandler {
 
     companion object {
-        var billingHelper: BillingHelper? = null
         var boughtPro = false
     }
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: ViewPagerAdapter
+    private lateinit var billingProcessor: BillingProcessor
     private var isStart = true
 
 
@@ -39,8 +43,9 @@ class MainActivity
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        billingHelper = BillingHelper(this, applicationContext)
         MobileAds.initialize(this)
+        billingProcessor = BillingProcessor(this, LICENSE_KEY, this)
+        billingProcessor.initialize()
 
         adapter = ViewPagerAdapter(this)
         binding.viewPager.adapter = adapter
@@ -53,10 +58,13 @@ class MainActivity
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onDestroy() {
+        billingProcessor.release()
+        super.onDestroy()
+    }
 
-        if(isStart && billingHelper?.isProVersion() == false) {
+    override fun onResume() {
+        if(isStart && !isProVersion()) {
             loadInterstitial()
             isStart = false
         }
@@ -64,6 +72,8 @@ class MainActivity
         adapter.update()
         binding.viewPager.adapter = adapter
         updateLayouts()
+
+        super.onResume()
     }
 
     @Deprecated("Deprecated in Java")
@@ -84,6 +94,25 @@ class MainActivity
         updateLayouts()
     }
 
+    fun isProVersion() = billingProcessor.isPurchased(PRODUCT_ID)
+
+    fun purchaseProVersion() {
+        billingProcessor.purchase(this, PRODUCT_ID)
+    }
+
+    override fun onProductPurchased(productId: String, details: PurchaseInfo?) {
+        boughtPro = true
+        recreate()
+    }
+
+    override fun onBillingInitialized() {
+        billingProcessor.loadOwnedPurchasesFromGoogleAsync(null)
+    }
+
+    override fun onPurchaseHistoryRestored() { }
+
+    override fun onBillingError(errorCode: Int, error: Throwable?) { }
+
 
     private fun updateLayouts() {
         binding.linearLayoutTexts.visibility = if(adapter.itemCount > 0) View.GONE else View.VISIBLE
@@ -97,5 +126,4 @@ class MainActivity
             }
         })
     }
-
 }

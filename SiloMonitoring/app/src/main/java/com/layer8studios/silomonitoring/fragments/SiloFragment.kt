@@ -62,7 +62,7 @@ class SiloFragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isProVersion = (MainActivity.billingHelper!!.isProVersion() || MainActivity.boughtPro)
+        val isProVersion = ((activity as MainActivity).isProVersion() || MainActivity.boughtPro)
 
         if(!isProVersion) {
             val adRequest = AdRequest.Builder().build()
@@ -74,7 +74,7 @@ class SiloFragment
         binding.toolbar.setOnMenuItemClickListener { item ->
             when(item.itemId) {
                 R.id.action_remove_ads -> {
-                    MainActivity.billingHelper?.purchaseProVersion(requireActivity())
+                    (activity as MainActivity).purchaseProVersion()
                 }
 
                 R.id.action_view_history -> {
