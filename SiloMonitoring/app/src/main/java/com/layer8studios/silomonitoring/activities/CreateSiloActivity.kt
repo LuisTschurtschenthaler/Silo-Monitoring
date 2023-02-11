@@ -158,7 +158,7 @@ class CreateSiloActivity
                     val lastRefill = SiloHistoryEntry(lastRefillDate.toDate(), lastRefillQuantity, true)
                     val newSilo = Silo(name, capacity, content, needPerDay, daysBeforeNotification, mutableListOf(lastRefill))
 
-                    Utils.createSiloHistory(newSilo, needPerDay, lastRefillDate, lastRefillDate, today)
+                    Utils.createSiloHistory(newSilo, needPerDay, lastRefillDate, today)
 
                     Preferences.addSilo(newSilo)
                     NotificationReceiver.scheduleNotification(this, newSilo)

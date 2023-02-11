@@ -32,7 +32,7 @@ object Utils {
         val today = LocalDate.now()
 
         for(date in lastDate..today) {
-            if(date == today) continue
+            if(date.year == today.year && date.dayOfYear == today.dayOfYear) break
             val dayEntries = newSilo.emptyingHistory.filter { it.date == date.toDate() }
 
             if(dayEntries.find { !it.wasAdded } == null) {
@@ -52,7 +52,7 @@ object Utils {
         }
     }
 
-    fun createSiloHistory(silo: Silo, needPerDay: Double, lastRefillDate: LocalDate, from: LocalDate, to: LocalDate) {
+    fun createSiloHistory(silo: Silo, needPerDay: Double, from: LocalDate, to: LocalDate) {
         for(date in from..to) {
             val entry = SiloHistoryEntry(date.toDate(), needPerDay)
             silo.emptyingHistory.add(entry)
