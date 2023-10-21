@@ -27,14 +27,14 @@ class NotificationReceiver
     : BroadcastReceiver() {
 
     companion object {
-        var areNotificationsScheduled = false
+        private var areNotificationsScheduled = false
 
         fun scheduleNotification(context: Context, silo: Silo) {
             val contentLeft = Utils.getContentLeft(silo)
             val daysLeft = ceil(contentLeft / silo.needPerDay).toLong()
             val refillDate = LocalDate.now().plusDays(daysLeft).minusDays(silo.daysBeforeNotification)
 
-            schedule(context, refillDate.toDate(), silo)
+            schedule(context, refillDate, silo)
         }
 
         fun cancelNotification(context: Context, silo: Silo) {
@@ -59,8 +59,8 @@ class NotificationReceiver
                 val daysLeft = ceil(contentLeft / silo.needPerDay).toLong()
                 val refillDate = LocalDate.now().plusDays(daysLeft).minusDays(silo.daysBeforeNotification)
 
-                schedule(context, refillDate.toDate(), silo)
-                println("Scheduled for ${refillDate.toDate()} (${silo.notificationID})")
+                schedule(context, refillDate, silo)
+                println("Scheduled for $refillDate (${silo.notificationID})")
             }
             areNotificationsScheduled = true
         }
@@ -77,7 +77,7 @@ class NotificationReceiver
         }
 
 
-        private fun schedule(context: Context, date: Date, silo: Silo) {
+        private fun schedule(context: Context, date: LocalDate, silo: Silo) {
             val alarmManager = (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
             val intent = Intent(context, NotificationReceiver::class.java).apply {
                 putExtra(ARG_SILO, silo)
@@ -85,7 +85,7 @@ class NotificationReceiver
             val pendingIntent = PendingIntent.getBroadcast(context, silo.notificationID, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
             val future = Calendar.getInstance().apply {
-                set(Calendar.MONTH, date.month)
+                set(Calendar.MONTH, date.monthValue - 1)
                 set(Calendar.YEAR, date.year)
                 set(Calendar.DAY_OF_MONTH, date.dayOfMonth)
                 set(Calendar.HOUR_OF_DAY, 6)
@@ -99,7 +99,6 @@ class NotificationReceiver
                 future.timeInMillis,
                 pendingIntent
             )
-            //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, future.timeInMillis, pendingIntent, PendingIntent.FLAG_CANCEL_CURRENT)
         }
 
         private fun cancel(context: Context, silo: Silo) {
