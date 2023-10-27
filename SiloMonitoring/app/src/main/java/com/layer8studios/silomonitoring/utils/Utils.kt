@@ -7,7 +7,6 @@ import java.time.LocalDate
 
 
 object Utils {
-
     fun LocalDate.toDate(): Date = Date(year, monthValue, dayOfMonth)
 
     fun Date.toLocalDate(): LocalDate = LocalDate.of(year, month, dayOfMonth)

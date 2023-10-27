@@ -62,21 +62,9 @@ class SiloFragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isProVersion = ((activity as MainActivity).isProVersion() || MainActivity.boughtPro)
-
-        if(!isProVersion) {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.visibility = View.VISIBLE
-            binding.adView.loadAd(adRequest)
-        }
-
-        binding.toolbar.inflateMenu(if(isProVersion) R.menu.silo_menu else R.menu.silo_menu_free_version)
+        binding.toolbar.inflateMenu(R.menu.silo_menu)
         binding.toolbar.setOnMenuItemClickListener { item ->
             when(item.itemId) {
-                R.id.action_remove_ads -> {
-                    (activity as MainActivity).purchaseProVersion()
-                }
-
                 R.id.action_view_history -> {
                     val intent = Intent(requireContext(), ViewHistoryActivity::class.java).apply {
                         putExtra(ARG_SILO, silo)
@@ -161,7 +149,4 @@ class SiloFragment
         else ColorUtils.getInterpolatedColor(orange, red, progress)
         binding.waveView.background = ColorDrawable(color)
     }
-
-
-
 }
