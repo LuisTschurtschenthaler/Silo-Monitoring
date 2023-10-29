@@ -27,7 +27,6 @@ Advantages of the app:
 ## Dependencies
 - [Glide](https://github.com/bumptech/glide)
 - [WaveView](https://github.com/john990/WaveView)
-- [In-App Billing](https://github.com/anjlab/android-inapp-billing-v3)
 
 <br />
 
